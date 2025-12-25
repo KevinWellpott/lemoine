@@ -1,6 +1,10 @@
 import { Metadata } from 'next'
 import { Header } from '@/components/Header'
 import { HeroSection } from '@/components/HeroSection'
+import { AnkaufSection } from '@/components/AnkaufSection'
+import { ProzessSection } from '@/components/ProcessSection'
+import { BewertungenSection } from '@/components/BewertungenSection'
+import { KontaktSection } from '@/components/KontaktSection'
 import { Footer } from '@/components/Footer'
 
 export const metadata: Metadata = {
@@ -17,6 +21,10 @@ export default function Home() {
       <Header />
       <main>
         <HeroSection />
+        <AnkaufSection />
+        <ProzessSection />
+        <BewertungenSection />
+        <KontaktSection />
         {/* Hier kommen später die anderen Sections */}
       </main>
       <Footer />
