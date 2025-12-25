@@ -10,6 +10,7 @@ import {
   Image,
   Badge,
   SimpleGrid,
+  HStack,
 } from '@chakra-ui/react'
 
 export function HeroSection() {
@@ -54,21 +55,39 @@ export function HeroSection() {
         >
           {/* Content */}
           <Box flex="1" maxW={{ base: 'full', lg: '600px' }}>
-            {/* Glassmorphism Badge */}
-            <Box
-              bg="rgba(255,255,255,0.15)"
-              backdropFilter="blur(10px)"
-              border="1px solid rgba(255,255,255,0.2)"
-              borderRadius="full"
-              px={4}
-              py={2}
-              mb={6}
-              display="inline-block"
-              fontSize={{ base: "sm", md: "md" }}
-              fontWeight="600"
-            >
-              🏆 Seit 1998 in Bielefeld
-            </Box>
+            {/* Mobile.de Badge */}
+            <HStack mb={6} spacing={4}>
+              <Box
+                bg="rgba(255,255,255,0.15)"
+                backdropFilter="blur(10px)"
+                border="1px solid rgba(255,255,255,0.2)"
+                borderRadius="full"
+                px={4}
+                py={2}
+                display="inline-block"
+                fontSize={{ base: "sm", md: "md" }}
+                fontWeight="600"
+              >
+                🏆 Seit 1998 in Bielefeld
+              </Box>
+              
+              <Box
+                bg="rgba(255,255,255,0.9)"
+                backdropFilter="blur(10px)"
+                border="1px solid rgba(255,255,255,0.3)"
+                borderRadius="full"
+                px={4}
+                py={2}
+                display="inline-flex"
+                alignItems="center"
+                gap={2}
+              >
+            
+                <Text color="gray.800" fontSize={{ base: "xs", md: "sm" }} fontWeight="600">
+                  ⭐⭐⭐⭐⭐ 4,5 Sterne auf mobile.de
+                </Text>
+              </Box>
+            </HStack>
             
             <Heading
               as="h1"
@@ -78,7 +97,7 @@ export function HeroSection() {
               fontWeight="800"
               textShadow="0 4px 12px rgba(0,0,0,0.3)"
             >
-              LKW & Nutzfahrzeuge direkt vom Profi
+              LKW & Nutzfahrzeuge direkt vom Profi aus Bielefeld
             </Heading>
             
             <Heading
@@ -89,7 +108,7 @@ export function HeroSection() {
               opacity={0.9}
               lineHeight="tall"
             >
-              Mercedes • MAN • Volvo • Scania • Iveco
+              Mercedes • MAN • Volvo • Scania • Iveco • uvm
             </Heading>
             
             <Text 
@@ -144,77 +163,91 @@ export function HeroSection() {
               ))}
             </SimpleGrid>
 
-            {/* Glassmorphism CTA Buttons */}
+            {/* CTA Buttons mit Verkauf/Ankauf */}
             <Stack 
-              direction={{ base: 'column', sm: 'row' }} 
-              gap={4}
-              mb={6}
-            >
-              <Button
-                size={{ base: "md", md: "lg" }}
-                bg="rgba(255,107,53,0.9)"
-                color="white"
-                backdropFilter="blur(10px)"
-                border="1px solid rgba(255,107,53,0.3)"
-                _hover={{ 
-                  bg: "rgba(255,107,53,1)",
-                  transform: 'translateY(-3px)', 
-                  boxShadow: '0 15px 35px rgba(255,107,53,0.4)' 
-                }}
-                transition="all 0.3s"
-                as="a"
-                href="tel:+4952112345678"
-                borderRadius="full"
-                px={{ base: 6, md: 8 }}
-                fontSize={{ base: "sm", md: "md" }}
-                fontWeight="600"
-              >
-                📞 0521 / 123 456 78
-              </Button>
-              <Button
-                size={{ base: "md", md: "lg" }}
-                variant="outline"
-                bg="rgba(255,255,255,0.15)"
-                backdropFilter="blur(10px)"
-                border="1px solid rgba(255,255,255,0.3)"
-                color="white"
-                _hover={{ 
-                  bg: 'rgba(255,255,255,0.25)',
-                  transform: 'translateY(-3px)',
-                  boxShadow: '0 15px 35px rgba(255,255,255,0.2)' 
-                }}
-                transition="all 0.3s"
-                borderRadius="full"
-                px={{ base: 6, md: 8 }}
-                fontSize={{ base: "sm", md: "md" }}
-                fontWeight="600"
-              >
-                💬 Kostenlos anfragen
-              </Button>
-            </Stack>
+  direction={{ base: 'column', sm: 'row' }} 
+  gap={4}
+  mb={6}
+  justify="center"
+  align="center"
+>
+  <Button
+    size={{ base: "lg", md: "xl" }}
+    bg="rgba(30,58,138,0.9)"
+    color="white"
+    backdropFilter="blur(10px)"
+    border="2px solid rgba(255,255,255,0.3)"
+    _hover={{ 
+      bg: "rgba(30,58,138,1)",
+      transform: 'translateY(-4px)', 
+      boxShadow: '0 20px 40px rgba(30,58,138,0.4)',
+      borderColor: "rgba(255,255,255,0.5)"
+    }}
+    transition="all 0.3s"
+    as="a"
+    href="tel:+4952112345678"
+    borderRadius="lg"
+    px={{ base: 8, md: 10 }}
+    py={{ base: 4, md: 5 }}
+    fontSize={{ base: "md", md: "lg" }}
+    fontWeight="700"
+    minW={{ base: "280px", sm: "200px" }}
+  >
+    📞 0521 / 123 456 78
+  </Button>
+  
+  <Button
+    size={{ base: "lg", md: "xl" }}
+    bg="rgba(59,130,246,0.9)"
+    color="white"
+    backdropFilter="blur(10px)"
+    border="2px solid rgba(255,255,255,0.3)"
+    _hover={{ 
+      bg: "rgba(59,130,246,1)",
+      transform: 'translateY(-4px)', 
+      boxShadow: '0 20px 40px rgba(59,130,246,0.4)',
+      borderColor: "rgba(255,255,255,0.5)"
+    }}
+    transition="all 0.3s"
+    borderRadius="lg"
+    px={{ base: 8, md: 10 }}
+    py={{ base: 4, md: 5 }}
+    fontSize={{ base: "md", md: "lg" }}
+    fontWeight="700"
+    as="a"
+    href="#verkauf"
+    minW={{ base: "280px", sm: "200px" }}
+  >
+    🚛 LKW kaufen
+  </Button>
+  
+  <Button
+    size={{ base: "lg", md: "xl" }}
+    bg="rgba(96,165,250,0.9)"
+    color="white"
+    backdropFilter="blur(10px)"
+    border="2px solid rgba(255,255,255,0.3)"
+    _hover={{ 
+      bg: "rgba(96,165,250,1)",
+      transform: 'translateY(-4px)', 
+      boxShadow: '0 20px 40px rgba(96,165,250,0.4)',
+      borderColor: "rgba(255,255,255,0.5)"
+    }}
+    transition="all 0.3s"
+    borderRadius="lg"
+    px={{ base: 8, md: 10 }}
+    py={{ base: 4, md: 5 }}
+    fontSize={{ base: "md", md: "lg" }}
+    fontWeight="700"
+    as="a"
+    href="#ankauf"
+    minW={{ base: "280px", sm: "200px" }}
+  >
+    💰 LKW verkaufen
+  </Button>
+</Stack>
 
-            {/* Trust Signals */}
-            <Flex 
-              mt={6} 
-              gap={{ base: 2, sm: 4 }} 
-              flexWrap="wrap" 
-              fontSize={{ base: "xs", sm: "sm" }} 
-              opacity={0.8}
-              justify={{ base: "center", lg: "flex-start" }}
-            >
-              {["✓ TÜV-geprüft", "✓ 12 Monate Garantie", "✓ Sofortige Verfügbarkeit", "✓ Inzahlungnahme möglich"].map((trust, index) => (
-                <Box
-                  key={index}
-                  bg="rgba(255,255,255,0.1)"
-                  px={{ base: 2, sm: 3 }}
-                  py={1}
-                  borderRadius="full"
-                  border="1px solid rgba(255,255,255,0.2)"
-                >
-                  <Text>{trust}</Text>
-                </Box>
-              ))}
-            </Flex>
+           
           </Box>
 
           {/* Glassmorphism Image Container */}
