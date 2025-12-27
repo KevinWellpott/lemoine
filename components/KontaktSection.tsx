@@ -15,10 +15,12 @@ import {
   Select,
   Textarea,
   Flex,
+  useToast,
 } from '@chakra-ui/react'
 
 export function KontaktSection() {
   const [formMode, setFormMode] = useState<'kaufen' | 'verkaufen'>('kaufen')
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [formData, setFormData] = useState({
     fahrzeugtyp: '',
     hersteller: '',
@@ -32,6 +34,8 @@ export function KontaktSection() {
     erreichbarkeit: '',
     nachricht: ''
   })
+
+  const toast = useToast()
 
   const fahrzeugtypenKaufen = [
     'Sattelzugmaschine',
@@ -74,10 +78,60 @@ export function KontaktSection() {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Hier würde die Form-Submission Logic hin
-    console.log('Form submitted:', formData)
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          formMode,
+          timestamp: new Date().toISOString()
+        }),
+      })
+
+      if (response.ok) {
+        toast({
+          title: 'Nachricht gesendet! ✅',
+          description: 'Wir melden uns innerhalb von 24 Stunden bei Ihnen.',
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        })
+        
+        // Form zurücksetzen
+        setFormData({
+          fahrzeugtyp: '',
+          hersteller: '',
+          modell: '',
+          kilometerstand: '',
+          vorname: '',
+          nachname: '',
+          plz: '',
+          email: '',
+          telefon: '',
+          erreichbarkeit: '',
+          nachricht: ''
+        })
+      } else {
+        throw new Error('Fehler beim Senden')
+      }
+    } catch (error) {
+      toast({
+        title: 'Fehler beim Senden ❌',
+        description: 'Bitte versuchen Sie es erneut oder rufen Sie uns direkt an: 0521 / 123 456 78',
+        status: 'error',
+        duration: 7000,
+        isClosable: true,
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -471,6 +525,9 @@ export function KontaktSection() {
                     fontSize="lg"
                     fontWeight="700"
                     shadow="xl"
+                    isLoading={isSubmitting}
+                    loadingText="Wird gesendet..."
+                    isDisabled={!formData.vorname || !formData.nachname || !formData.email || !formData.telefon || !formData.fahrzeugtyp || !formData.hersteller}
                   >
                     {formMode === 'kaufen' 
                       ? '🚛 Anfrage senden - Fahrzeug finden' 
@@ -490,9 +547,8 @@ export function KontaktSection() {
             </Box>
           </Box>
 
-          {/* Map & Contact Info */}
+          {/* Map & Contact Info - Rest bleibt gleich */}
           <VStack spacing={8} align="stretch">
-            {/* Map */}
             <Box
               bg="white"
               borderRadius="3xl"
@@ -514,7 +570,6 @@ export function KontaktSection() {
               />
             </Box>
 
-            {/* Contact Info */}
             <VStack spacing={6}>
               <Box
                 bg="white"
