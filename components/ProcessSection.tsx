@@ -180,7 +180,7 @@ export function ProzessSection() {
         <Box textAlign="center" mb={{ base: 12, md: 20 }}>
           {activeMode === 'verkaufen' && (
             <Box
-              bg="linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)"
+             bgGradient="linear(135deg, #1e40af, #3b82f6)"
               color="white"
               py={4}
               px={8}
