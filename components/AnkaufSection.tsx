@@ -35,7 +35,7 @@ export function AnkaufSection() {
         {/* Header mit rotem Banner */}
         <Box textAlign="center" mb={{ base: 10, md: 16 }}>
           <Box
-            bg="linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)"
+            bgGradient="linear(135deg, #1e40af, #3b82f6)"
             color="white"
             py={{ base: 4, md: 6 }}
             px={{ base: 6, md: 10 }}
@@ -200,7 +200,7 @@ export function AnkaufSection() {
 
         {/* CTA Section */}
         <Box 
-          bg="linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)"
+          bgGradient="linear(135deg, #1e40af, #3b82f6)"
           color="white"
           borderRadius="3xl"
           p={{ base: 8, md: 12 }}
@@ -254,7 +254,7 @@ export function AnkaufSection() {
               <Button
                 size="xl"
                 bg="rgba(255,255,255,0.9)"
-                color="red.600"
+                color="black"
                 _hover={{ 
                   bg: "white",
                   transform: 'translateY(-3px)', 

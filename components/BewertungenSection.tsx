@@ -14,47 +14,36 @@ import {
 export function BewertungenSection() {
   const bewertungen = [
     {
-      name: "Michael Weber",
-      text: "Schnelle und professionelle Abwicklung. Unser neuer Actros war sofort einsatzbereit und der Service war erstklassig!",
+      name: "Mark Heine",
+      text: "Sehr nette und ehrliche Beratung. Habe zwei schöne Sattelaufzüge gekauft. Immer wieder gerne!",
       sterne: 5,
-      ort: "Hannover",
-      fahrzeug: "Mercedes Actros"
+    
     },
     {
-      name: "Sandra Müller", 
-      text: "Sehr faire Preise und ehrliche Beratung. Das Team von Lemoine hat uns perfekt beraten und das ideale Fahrzeug gefunden.",
+      name: "Markus Nolte", 
+      text: "Sehr nettes Personal und auch immer hilfsbereit wenn man Probleme hat versuchen sie ne Lösung zu finden . Also ich werde dort immer wieder kaufen top Leute .",
       sterne: 5,
-      ort: "Paderborn", 
-      fahrzeug: "MAN TGX"
+   
     },
     {
-      name: "Thomas Richter",
-      text: "Verkauf meines alten LKW lief reibungslos ab. Schnelle Bewertung, fairer Preis und zügige Abwicklung. Sehr empfehlenswert!",
+      name: "Horst Guerntke",
+      text: "Alles sehr gut in der Werkstatt. Sehr freundliche Mitarbeiter",
       sterne: 5,
-      ort: "Gütersloh",
-      fahrzeug: "Volvo FH"
+      
     },
     {
-      name: "Julia Hoffmann",
-      text: "Kompetente Beratung und große Auswahl. Die Finanzierung wurde perfekt auf unser Unternehmen abgestimmt.",
+      name: "Ralf Uttenreuther",
+      text: "Freundliche, nette und kompetende Leute",
       sterne: 5,
-      ort: "Detmold",
-      fahrzeug: "Iveco Daily"
+  
     },
     {
-      name: "Robert Krause",
-      text: "Bereits der dritte LKW den wir bei Lemoine gekauft haben. Qualität und Service stimmen einfach - weiter so!",
+      name: "Stephan",
+      text: "Bodenständig und Fair",
       sterne: 5,
-      ort: "Bielefeld",
-      fahrzeug: "Scania R-Serie"
+   
     },
-    {
-      name: "Elena Schneider",
-      text: "Ausgezeichneter Kundenservice! Von der ersten Anfrage bis zur Übergabe alles perfekt organisiert.",
-      sterne: 5,
-      ort: "Minden",
-      fahrzeug: "Mercedes Sprinter"
-    }
+
   ]
 
   const bgGradient = useColorModeValue(
@@ -81,7 +70,7 @@ export function BewertungenSection() {
         {/* Header */}
         <VStack spacing={6} textAlign="center" mb={{ base: 12, md: 20 }}>
           <Box
-            bg="linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)"
+            bgGradient="linear(135deg, #1e40af, #3b82f6)"
             color="white"
             py={3}
             px={8}
@@ -201,11 +190,7 @@ export function BewertungenSection() {
                   <Text fontWeight="700" color="gray.800" fontSize="md">
                     {bewertung.name}
                   </Text>
-                  <HStack spacing={2} fontSize="sm" color="gray.500">
-                    <Text>📍 {bewertung.ort}</Text>
-                    <Text>•</Text>
-                    <Text>🚛 {bewertung.fahrzeug}</Text>
-                  </HStack>
+               
                 </VStack>
               </HStack>
 

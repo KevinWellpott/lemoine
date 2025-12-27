@@ -6,6 +6,7 @@ import {
   Button,
   Container,
   HStack,
+  Image,
 } from '@chakra-ui/react'
 
 export function Header() {
@@ -24,37 +25,63 @@ export function Header() {
     >
       <Container maxW="7xl">
         <Flex h={{ base: 14, md: 16 }} align="center" justify="space-between">
-          {/* Logo */}
-          <Flex align="center">
+          {/* Logo - klickbar zur Startseite */}
+          <Flex 
+            align="center" 
+            gap={3} 
+            as="a"
+            href="/"
+            cursor="pointer"
+            _hover={{ transform: "scale(1.02)", transition: "all 0.3s" }}
+          >
             <Box
-              bg="linear-gradient(135deg, #1e3a8a, #3b82f6)"
-              bgClip="text"
+              bg="linear-gradient(135deg, #1e40af, #3b82f6)"
+              borderRadius="lg"
+              p={2}
+              shadow="md"
               _hover={{ 
-                bgGradient: "linear(135deg, #1e40af, #2563eb)",
+                transform: "scale(1.05)",
                 transition: "all 0.3s"
               }}
             >
-              <Text 
-                fontSize={{ base: "lg", md: "xl" }} 
-                fontWeight="800" 
-                color="transparent"
-                letterSpacing="tight"
+              <Box
+                bg="white"
+                borderRadius="md"
+                px={3}
+                py={1}
+                minW="60px"
+                textAlign="center"
               >
-                Lemoine Nutzfahrzeuge
-              </Text>
+                <Text 
+                  fontSize={{ base: "sm", md: "md" }}
+                  fontWeight="900"
+                  bgGradient="linear(135deg, #1e40af, #3b82f6)"
+                  bgClip="text"
+                  color="transparent"
+                  letterSpacing="tight"
+                >
+                  Lemoine
+                </Text>
+              </Box>
             </Box>
-            <Box
-              ml={3}
-              bg="orange.500"
-              color="white"
-              px={2}
-              py={1}
-              borderRadius="md"
-              fontSize="xs"
-              fontWeight="600"
-              display={{ base: "none", sm: "block" }}
-            >
-              Seit 1998
+            
+            <Box>
+              <Text 
+                fontSize={{ base: "md", md: "lg" }} 
+                fontWeight="800" 
+                color="gray.800"
+                lineHeight="1"
+              >
+                Nutzfahrzeuge
+              </Text>
+              <Text 
+                fontSize="xs"
+                color="gray.500"
+                fontWeight="600"
+                lineHeight="1"
+              >
+                Bielefeld seit 1998
+              </Text>
             </Box>
           </Flex>
 
@@ -66,7 +93,7 @@ export function Header() {
           >
             <Text 
               as="a" 
-              href="#verkauf"
+              href='/kontakt'
               fontSize="md"
               fontWeight="600"
               color="gray.700"
@@ -82,7 +109,7 @@ export function Header() {
             </Text>
             <Text 
               as="a" 
-              href="#ankauf"
+              href="/kontakt"
               fontSize="md"
               fontWeight="600"
               color="gray.700"
@@ -96,25 +123,10 @@ export function Header() {
             >
               LKW verkaufen
             </Text>
+    
             <Text 
               as="a" 
-              href="#ueber-uns"
-              fontSize="md"
-              fontWeight="600"
-              color="gray.700"
-              _hover={{ 
-                color: 'blue.600',
-                textDecoration: "underline",
-                textUnderlineOffset: "4px",
-                textDecorationColor: "blue.300", 
-                transition: "all 0.3s"
-              }}
-            >
-              Über uns
-            </Text>
-            <Text 
-              as="a" 
-              href="#kontakt"
+              href="https://home.mobile.de/LEMOINE-NUTZFAHRZEUGE#ses"
               fontSize="md"
               fontWeight="600"
               color="gray.700"
@@ -126,11 +138,11 @@ export function Header() {
                 transition: "all 0.3s"
               }}
             >
-              Kontakt
+              Inserate
             </Text>
           </HStack>
 
-          {/* Call Button */}
+          {/* Contact Button */}
           <Button
             size={{ base: "sm", md: "md" }}
             bg="linear-gradient(135deg, #1e3a8a, #3b82f6)"
@@ -142,17 +154,17 @@ export function Header() {
             }}
             transition="all 0.3s"
             as="a"
-            href="tel:+4952112345678"
+            href="/kontakt"
             borderRadius="lg"
-            px={{ base: 3, md: 6 }}
+            px={{ base: 4, md: 6 }}
             fontWeight="600"
             shadow="md"
           >
             <Text display={{ base: "none", sm: "block" }}>
-              📞 0521 / 123 456 78
+              💬 Kontakt
             </Text>
             <Text display={{ base: "block", sm: "none" }}>
-              📞 Anrufen
+              💬 Kontakt
             </Text>
           </Button>
         </Flex>
