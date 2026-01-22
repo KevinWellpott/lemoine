@@ -77,7 +77,7 @@ export function ProzessSection() {
             <Button
               onClick={() => setActiveMode('kaufen')}
               bg={activeMode === 'kaufen' ? 'white' : 'transparent'}
-              color={activeMode === 'kaufen' ? 'blue.600' : (activeMode === 'kaufen' ? 'white' : 'gray.600')}
+              color={activeMode === 'kaufen' ? 'blue.600' : 'gray.600'}
               _hover={{ 
                 bg: activeMode === 'kaufen' ? 'gray.50' : 'rgba(0,0,0,0.05)'
               }}
