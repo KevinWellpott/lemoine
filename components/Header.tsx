@@ -12,7 +12,7 @@ import {
 export function Header() {
   return (
     <Box 
-      bg="rgba(255,255,255,0.95)" 
+      bg="rgb(255, 255, 255)" 
       backdropFilter="blur(12px)"
       borderBottom="1px solid"
       borderColor="rgba(59,130,246,0.1)"
@@ -35,54 +35,23 @@ export function Header() {
             _hover={{ transform: "scale(1.02)", transition: "all 0.3s" }}
           >
             <Box
-              bg="linear-gradient(135deg, #1e40af, #3b82f6)"
               borderRadius="lg"
-              p={2}
-              shadow="md"
+              p={1}
               _hover={{ 
                 transform: "scale(1.05)",
                 transition: "all 0.3s"
               }}
             >
-              <Box
-                bg="white"
+              <Image
+                src="/lemoine.svg"
+                alt="Lemoine Nutzfahrzeuge Logo"
+                height={{ base: "40px", md: "50px" }}
+                width="auto"
                 borderRadius="md"
-                px={3}
-                py={1}
-                minW="60px"
-                textAlign="center"
-              >
-                <Text 
-                  fontSize={{ base: "sm", md: "md" }}
-                  fontWeight="900"
-                  bgGradient="linear(135deg, #1e40af, #3b82f6)"
-                  bgClip="text"
-                  color="transparent"
-                  letterSpacing="tight"
-                >
-                  Lemoine
-                </Text>
-              </Box>
+              />
             </Box>
             
-            <Box>
-              <Text 
-                fontSize={{ base: "md", md: "lg" }} 
-                fontWeight="800" 
-                color="gray.800"
-                lineHeight="1"
-              >
-                Nutzfahrzeuge
-              </Text>
-              <Text 
-                fontSize="xs"
-                color="gray.500"
-                fontWeight="600"
-                lineHeight="1"
-              >
-                Bielefeld seit 1998
-              </Text>
-            </Box>
+           
           </Flex>
 
           {/* Desktop Navigation */}
@@ -161,10 +130,10 @@ export function Header() {
             shadow="md"
           >
             <Text display={{ base: "none", sm: "block" }}>
-              💬 Kontakt
+               Kontakt
             </Text>
             <Text display={{ base: "block", sm: "none" }}>
-              💬 Kontakt
+               Kontakt
             </Text>
           </Button>
         </Flex>
