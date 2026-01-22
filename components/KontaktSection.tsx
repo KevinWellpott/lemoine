@@ -147,14 +147,17 @@ export function KontaktSection() {
             Jetzt Kontakt aufnehmen
           </Heading>
           
-          <Text 
+          <Heading
+            as="h3" 
             fontSize={{ base: "lg", md: "xl" }} 
             color="gray.600" 
             maxW="600px"
+            fontWeight="400"
+            lineHeight="1.6"
           >
             Lassen Sie uns gemeinsam die perfekte Lösung für Ihr Nutzfahrzeug finden. 
             Kostenlose Beratung und schnelle Antwort garantiert.
-          </Text>
+          </Heading>
         </VStack>
 
         {/* Main Content Grid */}
@@ -500,7 +503,7 @@ export function KontaktSection() {
                 w="full"
               >
                 <VStack spacing={4} align="start">
-                  <Heading as="h3" size="lg" color="gray.800">
+                  <Heading as="h4" size="lg" color="gray.800">
                     📍 Unser Standort
                   </Heading>
                   <VStack align="start" spacing={1}>
@@ -523,7 +526,7 @@ export function KontaktSection() {
                 w="full"
               >
                 <VStack spacing={4} align="start">
-                  <Heading as="h3" size="lg" color="gray.800">
+                  <Heading as="h4" size="lg" color="gray.800">
                     📞 Direkter Kontakt
                   </Heading>
                   <VStack align="start" spacing={2}>

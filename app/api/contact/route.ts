@@ -1,103 +1,122 @@
+// /app/api/contact/route.ts (Vollständige Version)
 import { NextRequest, NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
 
 export async function POST(request: NextRequest) {
+  console.log('🚀 Dual E-Mail System gestartet')
+  
   try {
     const data = await request.json()
-    
-    // Nodemailer Transporter konfigurieren
+    console.log('✅ Anfrage von:', data.vorname, data.nachname, `(${data.email})`)
+
+    // Environment Check
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+      return NextResponse.json({ success: false, message: 'SMTP Config fehlt' }, { status: 500 })
+    }
+
+    // Transporter
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST, // z.B. "smtp.gmail.com"
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: false, // true für Port 465, false für andere Ports
+      service: 'gmail',
       auth: {
-        user: process.env.SMTP_USER, // Deine E-Mail
-        pass: process.env.SMTP_PASS, // Dein App-Passwort
-      },
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      }
     })
 
     const {
-      formMode,
-      fahrzeugtyp,
-      hersteller,
-      modell,
-      kilometerstand,
-      vorname,
-      nachname,
-      plz,
-      email,
-      telefon,
-      erreichbarkeit,
-      nachricht,
-      timestamp
+      formMode, fahrzeugtyp, hersteller, modell, kilometerstand,
+      vorname, nachname, plz, email, telefon, erreichbarkeit, nachricht
     } = data
 
-    // E-Mail an Lemoine
-    const mailToLemoine = {
+    // 1. E-Mail an LEMOINE (Geschäftsanfrage)
+    const businessEmail = {
       from: process.env.SMTP_USER,
-      to: 'info@lemoine-nutzfahrzeuge.de', // Kundenmailadresse
-      subject: `Neue ${formMode === 'kaufen' ? 'Kauf' : 'Verkauf'}anfrage - ${fahrzeugtyp}`,
+      to: 'rasmus.paweletz@gmail.com', // Hier später info@lemoine-nutzfahrzeuge.de
+      subject: `🚛 Neue ${formMode === 'kaufen' ? 'Kaufanfrage' : 'Verkaufsanfrage'} - ${vorname} ${nachname}`,
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="background: linear-gradient(135deg, #3b82f6, #1e40af); color: white; padding: 20px; border-radius: 10px 10px 0 0;">
-            <h1 style="margin: 0;">🚛 Neue ${formMode === 'kaufen' ? 'Kaufanfrage' : 'Verkaufsanfrage'}</h1>
-            <p style="margin: 5px 0 0 0; opacity: 0.9;">Eingang: ${new Date(timestamp).toLocaleString('de-DE')}</p>
-          </div>
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; max-width: 600px; margin: 0 auto; background: #f8fafc;">
           
-          <div style="background: #f8f9fa; padding: 20px; border-radius: 0 0 10px 10px;">
-            <h2 style="color: #1e40af; margin-top: 0;">Fahrzeug-Details</h2>
-            <table style="width: 100%; border-collapse: collapse;">
-              <tr><td style="padding: 5px 0; font-weight: bold;">Fahrzeugtyp:</td><td>${fahrzeugtyp}</td></tr>
-              <tr><td style="padding: 5px 0; font-weight: bold;">Hersteller:</td><td>${hersteller}</td></tr>
-              ${modell ? `<tr><td style="padding: 5px 0; font-weight: bold;">Modell:</td><td>${modell}</td></tr>` : ''}
-              ${kilometerstand ? `<tr><td style="padding: 5px 0; font-weight: bold;">Kilometerstand:</td><td>${kilometerstand}</td></tr>` : ''}
-            </table>
+          <div style="background: linear-gradient(135deg, #1e40af, #3b82f6); color: white; padding: 24px; border-radius: 16px 16px 0 0;">
+            <h1 style="margin: 0; font-size: 24px; font-weight: 700;">
+              🚛 Neue ${formMode === 'kaufen' ? 'Kaufanfrage' : 'Verkaufsanfrage'}
+            </h1>
+            <p style="margin: 8px 0 0 0; opacity: 0.9; font-size: 14px;">
+              Eingang: ${new Date().toLocaleString('de-DE')}
+            </p>
+          </div>
 
-            <h2 style="color: #1e40af;">Kontakt-Details</h2>
-            <table style="width: 100%; border-collapse: collapse;">
-              <tr><td style="padding: 5px 0; font-weight: bold;">Name:</td><td>${vorname} ${nachname}</td></tr>
-              <tr><td style="padding: 5px 0; font-weight: bold;">PLZ:</td><td>${plz}</td></tr>
-              <tr><td style="padding: 5px 0; font-weight: bold;">E-Mail:</td><td><a href="mailto:${email}">${email}</a></td></tr>
-              <tr><td style="padding: 5px 0; font-weight: bold;">Telefon:</td><td><a href="tel:+49${telefon}">+49 ${telefon}</a></td></tr>
-              ${erreichbarkeit ? `<tr><td style="padding: 5px 0; font-weight: bold;">Erreichbarkeit:</td><td>${erreichbarkeit}</td></tr>` : ''}
-            </table>
+          <div style="background: white; padding: 24px;">
+            
+            <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+              <h2 style="margin: 0 0 16px 0; color: #1e40af; font-size: 18px;">🚗 Fahrzeug Details</h2>
+              <table style="width: 100%; font-size: 14px;">
+                <tr><td style="padding: 4px 0; font-weight: 600; color: #374151;">Typ:</td><td style="color: #6b7280;">${fahrzeugtyp}</td></tr>
+                <tr><td style="padding: 4px 0; font-weight: 600; color: #374151;">Hersteller:</td><td style="color: #6b7280;">${hersteller}</td></tr>
+                ${modell ? `<tr><td style="padding: 4px 0; font-weight: 600; color: #374151;">Modell:</td><td style="color: #6b7280;">${modell}</td></tr>` : ''}
+                ${kilometerstand ? `<tr><td style="padding: 4px 0; font-weight: 600; color: #374151;">Kilometerstand:</td><td style="color: #6b7280;">${kilometerstand}</td></tr>` : ''}
+              </table>
+            </div>
+
+            <div style="background: #ecfdf5; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+              <h2 style="margin: 0 0 16px 0; color: #065f46; font-size: 18px;">👤 Kontakt Details</h2>
+              <table style="width: 100%; font-size: 14px;">
+                <tr><td style="padding: 4px 0; font-weight: 600; color: #374151;">Name:</td><td style="color: #6b7280;">${vorname} ${nachname}</td></tr>
+                <tr><td style="padding: 4px 0; font-weight: 600; color: #374151;">PLZ:</td><td style="color: #6b7280;">${plz}</td></tr>
+                <tr><td style="padding: 4px 0; font-weight: 600; color: #374151;">E-Mail:</td><td><a href="mailto:${email}" style="color: #3b82f6;">${email}</a></td></tr>
+                <tr><td style="padding: 4px 0; font-weight: 600; color: #374151;">Telefon:</td><td><a href="tel:${telefon}" style="color: #3b82f6;">${telefon}</a></td></tr>
+                ${erreichbarkeit ? `<tr><td style="padding: 4px 0; font-weight: 600; color: #374151;">Erreichbar:</td><td style="color: #6b7280;">${erreichbarkeit}</td></tr>` : ''}
+              </table>
+            </div>
 
             ${nachricht ? `
-              <h2 style="color: #1e40af;">Nachricht</h2>
-              <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #3b82f6;">
-                ${nachricht}
+              <div style="background: #fef3c7; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+                <h2 style="margin: 0 0 12px 0; color: #92400e; font-size: 18px;">💬 Nachricht</h2>
+                <p style="margin: 0; color: #78350f; line-height: 1.5;">${nachricht}</p>
               </div>
             ` : ''}
-            
-            <div style="margin-top: 20px; padding: 15px; background: #e3f2fd; border-radius: 8px;">
-              <p style="margin: 0; font-weight: bold; color: #1e40af;">💡 Nächste Schritte:</p>
-              <p style="margin: 5px 0 0 0;">Kunde innerhalb von 24h kontaktieren für ${formMode === 'kaufen' ? 'Beratungstermin' : 'Fahrzeugbewertung'}.</p>
+
+            <div style="background: #dbeafe; padding: 20px; border-radius: 12px; text-align: center;">
+              <h3 style="margin: 0 0 12px 0; color: #1e40af;">⚡ Sofort kontaktieren</h3>
+              <p style="margin: 8px 0;">
+                <a href="tel:${telefon}" style="display: inline-block; background: #3b82f6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: 600;">
+                  📞 ${telefon}
+                </a>
+              </p>
+              <p style="margin: 0; font-size: 12px; color: #6b7280;">
+                Innerhalb 24h anrufen für beste Conversion!
+              </p>
             </div>
+
           </div>
         </div>
       `
     }
 
-    // Bestätigungs-E-Mail an Kunden
-    const mailToCustomer = {
+    // 2. Bestätigungs-E-Mail an KUNDE
+    const customerEmail = {
       from: process.env.SMTP_USER,
       to: email,
-      subject: `Ihre Anfrage bei Lemoine Nutzfahrzeuge - ${fahrzeugtyp}`,
+      subject: `✅ Ihre ${formMode === 'kaufen' ? 'Kauf' : 'Verkauf'}sanfrage bei Lemoine Nutzfahrzeuge`,
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="background: linear-gradient(135deg, #3b82f6, #1e40af); color: white; padding: 20px; border-radius: 10px 10px 0 0;">
-            <h1 style="margin: 0;">Vielen Dank für Ihre Anfrage!</h1>
-            <p style="margin: 5px 0 0 0; opacity: 0.9;">Lemoine Nutzfahrzeuge - Ihr Partner seit 1998</p>
-          </div>
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; max-width: 600px; margin: 0 auto;">
           
-          <div style="background: #f8f9fa; padding: 20px; border-radius: 0 0 10px 10px;">
-            <p>Liebe/r ${vorname} ${nachname},</p>
+          <div style="background: linear-gradient(135deg, #059669, #10b981); color: white; padding: 24px; border-radius: 16px 16px 0 0;">
+            <h1 style="margin: 0; font-size: 24px; font-weight: 700;">✅ Vielen Dank für Ihre Anfrage!</h1>
+            <p style="margin: 8px 0 0 0; opacity: 0.9;">Lemoine Nutzfahrzeuge - Ihr Partner seit 1998</p>
+          </div>
+
+          <div style="background: white; padding: 24px; border-radius: 0 0 16px 16px;">
+            <p style="margin: 0 0 20px 0; font-size: 16px; color: #374151;">
+              Hallo ${vorname},
+            </p>
             
-            <p>vielen Dank für Ihr Interesse an unseren Nutzfahrzeugen! Wir haben Ihre ${formMode === 'kaufen' ? 'Kaufanfrage' : 'Verkaufsanfrage'} für einen <strong>${fahrzeugtyp}</strong> erhalten.</p>
-            
-            <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 20px 0;">
-              <h3 style="margin: 0 0 10px 0; color: #1e40af;">⏱️ Wie geht es weiter?</h3>
-              <ul style="margin: 0; padding-left: 20px;">
+            <p style="color: #6b7280; line-height: 1.6;">
+              vielen Dank für Ihr Interesse an unseren Nutzfahrzeugen! Wir haben Ihre <strong>${formMode === 'kaufen' ? 'Kaufanfrage' : 'Verkaufsanfrage'}</strong> für einen <strong>${fahrzeugtyp}</strong> von <strong>${hersteller}</strong> erhalten.
+            </p>
+
+            <div style="background: #f0f9ff; padding: 20px; border-radius: 12px; margin: 24px 0; border-left: 4px solid #3b82f6;">
+              <h3 style="margin: 0 0 16px 0; color: #1e40af; font-size: 18px;">⏰ Wie geht es weiter?</h3>
+              <ul style="margin: 0; padding-left: 20px; color: #374151; line-height: 1.6;">
                 <li>Wir melden uns <strong>innerhalb von 24 Stunden</strong> bei Ihnen</li>
                 <li>${formMode === 'kaufen' ? 'Kostenlose Beratung zu passenden Fahrzeugen' : 'Professionelle Bewertung Ihres Fahrzeugs'}</li>
                 <li>Terminvereinbarung für Besichtigung in Bielefeld</li>
@@ -105,31 +124,54 @@ export async function POST(request: NextRequest) {
               </ul>
             </div>
 
-            <div style="background: #dc2626; color: white; padding: 15px; border-radius: 8px; text-align: center; margin: 20px 0;">
-              <h3 style="margin: 0 0 10px 0;">📞 Für dringende Fragen:</h3>
-              <p style="font-size: 24px; font-weight: bold; margin: 0;">0521 / 123 456 78</p>
-              <p style="margin: 5px 0 0 0; opacity: 0.9;">Mo-Fr: 8:00-18:00 | Sa: 9:00-14:00</p>
+            <div style="background: #dc2626; color: white; padding: 20px; border-radius: 12px; text-align: center; margin: 24px 0;">
+              <h3 style="margin: 0 0 12px 0; font-size: 18px;">🚨 Dringend?</h3>
+              <p style="font-size: 28px; font-weight: 700; margin: 8px 0; letter-spacing: 1px;">
+                0521 / 390 622 2
+              </p>
+              <p style="margin: 0; opacity: 0.9; font-size: 14px;">
+                Mo-Fr: 9:00-18:00 Uhr | Sa: 10:00-14:00 Uhr
+              </p>
             </div>
 
-            <p>Mit freundlichen Grüßen<br>
-            <strong>Ihr Team von Lemoine Nutzfahrzeuge</strong><br>
-            Brönninghauser Str. 35B, 33729 Bielefeld</p>
+            <div style="background: #f9fafb; padding: 20px; border-radius: 12px; margin-top: 24px;">
+              <h3 style="margin: 0 0 12px 0; color: #374151;">🏢 Lemoine Nutzfahrzeuge</h3>
+              <p style="margin: 0; color: #6b7280; font-size: 14px; line-height: 1.5;">
+                Brönninghauser Str. 35B<br>
+                33729 Bielefeld<br><br>
+                <strong>27 Jahre Erfahrung</strong> • <strong>4.8/5 Google-Bewertung</strong> • <strong>Freier Händler</strong>
+              </p>
+            </div>
+
+            <p style="color: #6b7280; margin-top: 24px; line-height: 1.6;">
+              Mit freundlichen Grüßen<br>
+              <strong>Ihr Team von Lemoine Nutzfahrzeuge</strong>
+            </p>
           </div>
         </div>
       `
     }
 
-    // E-Mails versenden
-    await transporter.sendMail(mailToLemoine)
-    await transporter.sendMail(mailToCustomer)
+    // Beide E-Mails parallel versenden
+    console.log('📮 Sende beide E-Mails...')
+    const [businessResult, customerResult] = await Promise.all([
+      transporter.sendMail(businessEmail),
+      transporter.sendMail(customerEmail)
+    ])
 
-    return NextResponse.json({ success: true, message: 'E-Mails wurden erfolgreich versendet' })
+    console.log('✅ Business E-Mail:', businessResult.messageId)
+    console.log('✅ Kunden E-Mail:', customerResult.messageId)
+
+    return NextResponse.json({ 
+      success: true, 
+      message: 'Anfrage gesendet! Sie erhalten eine Bestätigungsmail.',
+    })
 
   } catch (error) {
-    console.error('E-Mail Fehler:', error)
-    return NextResponse.json(
-      { success: false, message: 'Fehler beim Versenden der E-Mail' },
-      { status: 500 }
-    )
+    console.error('❌ E-Mail Fehler:', error)
+    return NextResponse.json({ 
+      success: false, 
+      message: 'E-Mail konnte nicht gesendet werden. Bitte direkt anrufen: 0521 / 390 622 2'
+    }, { status: 500 })
   }
 }
