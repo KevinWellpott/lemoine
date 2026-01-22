@@ -50,92 +50,61 @@ export function Header() {
                 borderRadius="md"
               />
             </Box>
-            
-           
           </Flex>
 
-          {/* Desktop Navigation */}
-          <HStack 
-            display={{ base: 'none', lg: 'flex' }} 
-            spacing={8}
-            align="center"
-          >
-            <Text 
-              as="a" 
-              href='/kontakt'
-              fontSize="md"
-              fontWeight="600"
-              color="gray.700"
+          {/* Contact Buttons */}
+          <HStack spacing={3}>
+            <Button
+              size={{ base: "sm", md: "md" }}
+              bg="#1E3689"
+              color="white"
               _hover={{ 
-                color: 'blue.600',
-                textDecoration: "underline",
-                textUnderlineOffset: "4px",
-                textDecorationColor: "blue.300",
-                transition: "all 0.3s"
-              }}
-            >
-              LKW kaufen
-            </Text>
-            <Text 
-              as="a" 
-              href="/kontakt"
-              fontSize="md"
-              fontWeight="600"
-              color="gray.700"
-              _hover={{ 
-                color: 'blue.600',
-                textDecoration: "underline",
-                textUnderlineOffset: "4px", 
-                textDecorationColor: "blue.300",
-                transition: "all 0.3s"
-              }}
-            >
-              LKW verkaufen
-            </Text>
-    
-            <Text 
-              as="a" 
-              href="https://home.mobile.de/LEMOINE-NUTZFAHRZEUGE#ses"
-              fontSize="md"
-              fontWeight="600"
-              color="gray.700"
-              _hover={{ 
-                color: 'blue.600',
-                textDecoration: "underline",
-                textUnderlineOffset: "4px",
-                textDecorationColor: "blue.300",
-                transition: "all 0.3s"
-              }}
-            >
-              Inserate
-            </Text>
-          </HStack>
+                bg: "white",
+                color: "#1E3689",
 
-          {/* Contact Button */}
-          <Button
-            size={{ base: "sm", md: "md" }}
-            bg="linear-gradient(135deg, #1e3a8a, #3b82f6)"
-            color="white"
-            _hover={{ 
-              bg: "linear-gradient(135deg, #1e40af, #2563eb)",
-              transform: 'translateY(-2px)', 
-              boxShadow: '0 8px 25px rgba(30,58,138,0.3)' 
-            }}
-            transition="all 0.3s"
-            as="a"
-            href="/kontakt"
-            borderRadius="lg"
-            px={{ base: 4, md: 6 }}
-            fontWeight="600"
-            shadow="md"
-          >
-            <Text display={{ base: "none", sm: "block" }}>
-               Kontakt
-            </Text>
-            <Text display={{ base: "block", sm: "none" }}>
-               Kontakt
-            </Text>
-          </Button>
+                boxShadow: '0 8px 25px rgba(30,58,138,0.3)' ,
+                borderColor:"1E3689",
+              }}
+              transition="all 0.3s"
+              as="a"
+              href="/kontakt"
+              borderRadius="lg"
+              px={{ base: 4, md: 6 }}
+              fontWeight="600"
+              shadow="md"
+              border="1px solid"
+              borderColor="#1E3689"
+            >
+              <Text display={{ base: "none", sm: "block" }}>
+                Kontakt
+              </Text>
+              
+            </Button>
+            
+            <Button
+              size={{ base: "sm", md: "md" }}
+              variant="outline"
+              borderColor="blue.600"
+              color="blue.600"
+              _hover={{ 
+                bg: "#1E3689",
+                color: "white",
+                boxShadow: '0 8px 25px rgba(30,58,138,0.3)' 
+              }}
+              transition="all 0.3s"
+              as="a"
+              href="https://home.mobile.de/LEMOINE-NUTZFAHRZEUGE#ses"
+              target="_blank"
+              borderRadius="lg"
+              px={{ base: 4, md: 6 }}
+              fontWeight="600"
+            >
+              <Text display={{ base: "none", sm: "block" }}>
+                Inserate
+              </Text>
+          
+            </Button>
+          </HStack>
         </Flex>
       </Container>
     </Box>
