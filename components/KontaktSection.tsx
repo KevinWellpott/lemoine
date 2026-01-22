@@ -15,10 +15,12 @@ import {
   Select,
   Textarea,
   Flex,
+  useToast,
 } from '@chakra-ui/react'
 
 export function KontaktSection() {
   const [formMode, setFormMode] = useState<'kaufen' | 'verkaufen'>('kaufen')
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [formData, setFormData] = useState({
     fahrzeugtyp: '',
     hersteller: '',
@@ -32,6 +34,8 @@ export function KontaktSection() {
     erreichbarkeit: '',
     nachricht: ''
   })
+
+  const toast = useToast()
 
   const fahrzeugtypenKaufen = [
     'Sattelzugmaschine',
@@ -74,23 +78,71 @@ export function KontaktSection() {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Hier würde die Form-Submission Logic hin
-    console.log('Form submitted:', formData)
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          formMode,
+          timestamp: new Date().toISOString()
+        }),
+      })
+
+      if (response.ok) {
+        toast({
+          title: 'Nachricht gesendet!',
+          description: 'Wir melden uns innerhalb von 24 Stunden bei Ihnen.',
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        })
+        
+        setFormData({
+          fahrzeugtyp: '',
+          hersteller: '',
+          modell: '',
+          kilometerstand: '',
+          vorname: '',
+          nachname: '',
+          plz: '',
+          email: '',
+          telefon: '',
+          erreichbarkeit: '',
+          nachricht: ''
+        })
+      } else {
+        throw new Error('Fehler beim Senden')
+      }
+    } catch (error) {
+      toast({
+        title: 'Fehler beim Senden',
+        description: 'Bitte versuchen Sie es erneut oder rufen Sie uns an: 0521 / 123 456 78',
+        status: 'error',
+        duration: 7000,
+        isClosable: true,
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
     <Box py={{ base: 16, md: 24 }} bg="gray.50" id="kontakt">
-      <Container maxW="7xl">
+      <Container maxW="6xl">
         {/* Header */}
-        <VStack spacing={6} textAlign="center" mb={{ base: 12, md: 16 }}>
+        <VStack spacing={{ base: 6, md: 8 }} textAlign="center" mb={{ base: 12, md: 16 }}>
           <Heading 
             as="h2" 
             fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}
-            fontWeight="800"
-            bgGradient="linear(to-r, gray.800, blue.600)"
-            bgClip="text"
+            fontWeight="700"
+            color="gray.900"
           >
             Jetzt Kontakt aufnehmen
           </Heading>
@@ -99,7 +151,6 @@ export function KontaktSection() {
             fontSize={{ base: "lg", md: "xl" }} 
             color="gray.600" 
             maxW="600px"
-            lineHeight="tall"
           >
             Lassen Sie uns gemeinsam die perfekte Lösung für Ihr Nutzfahrzeug finden. 
             Kostenlose Beratung und schnelle Antwort garantiert.
@@ -107,7 +158,7 @@ export function KontaktSection() {
         </VStack>
 
         {/* Main Content Grid */}
-        <SimpleGrid columns={{ base: 1, xl: 2 }} spacing={{ base: 8, xl: 16 }}>
+        <SimpleGrid columns={{ base: 1, xl: 2 }} spacing={{ base: 8, xl: 12 }}>
           {/* Contact Form */}
           <Box>
             {/* Mode Toggle */}
@@ -117,45 +168,36 @@ export function KontaktSection() {
                 borderRadius="full"
                 p={1}
                 spacing={0}
-                shadow="lg"
                 border="1px solid"
                 borderColor="gray.200"
               >
                 <Button
                   onClick={() => setFormMode('kaufen')}
-                  bg={formMode === 'kaufen' ? 'linear-gradient(135deg, #3b82f6, #1e40af)' : 'transparent'}
+                  bg={formMode === 'kaufen' ? 'blue.600' : 'transparent'}
                   color={formMode === 'kaufen' ? 'white' : 'gray.600'}
                   _hover={{ 
-                    bg: formMode === 'kaufen' ? 'linear-gradient(135deg, #2563eb, #1e3a8a)' : 'gray.100',
-                    transform: 'scale(1.02)'
+                    bg: formMode === 'kaufen' ? 'blue.700' : 'gray.100'
                   }}
                   borderRadius="full"
-                  px={8}
+                  px={6}
                   py={3}
-                  fontWeight="700"
+                  fontWeight="600"
                   fontSize="md"
-                  transition="all 0.3s"
-                  border="none"
-                  shadow={formMode === 'kaufen' ? 'lg' : 'none'}
                 >
                   🚛 LKW kaufen
                 </Button>
                 <Button
                   onClick={() => setFormMode('verkaufen')}
-                  bg={formMode === 'verkaufen' ? 'linear-gradient(135deg, #dc2626, #b91c1c)' : 'transparent'}
+                  bg={formMode === 'verkaufen' ? 'blue.600' : 'transparent'}
                   color={formMode === 'verkaufen' ? 'white' : 'gray.600'}
                   _hover={{ 
-                    bg: formMode === 'verkaufen' ? 'linear-gradient(135deg, #b91c1c, #991b1b)' : 'gray.100',
-                    transform: 'scale(1.02)'
+                    bg: formMode === 'verkaufen' ? 'blue.700' : 'gray.100'
                   }}
                   borderRadius="full"
-                  px={8}
+                  px={6}
                   py={3}
-                  fontWeight="700"
+                  fontWeight="600"
                   fontSize="md"
-                  transition="all 0.3s"
-                  border="none"
-                  shadow={formMode === 'verkaufen' ? 'lg' : 'none'}
                 >
                   💰 LKW verkaufen
                 </Button>
@@ -165,11 +207,10 @@ export function KontaktSection() {
             {/* Form */}
             <Box
               bg="white"
-              borderRadius="3xl"
+              borderRadius="2xl"
               p={{ base: 6, md: 8 }}
-              shadow="2xl"
               border="1px solid"
-              borderColor="gray.100"
+              borderColor="gray.200"
             >
               <form onSubmit={handleSubmit}>
                 <VStack spacing={6}>
@@ -182,13 +223,10 @@ export function KontaktSection() {
                       placeholder="Fahrzeugtyp auswählen"
                       value={formData.fahrzeugtyp}
                       onChange={(e) => handleInputChange('fahrzeugtyp', e.target.value)}
-                      borderRadius="xl"
-                      border="2px solid"
-                      borderColor="gray.200"
-                      _focus={{ borderColor: 'blue.500', shadow: 'lg' }}
-                      bg="gray.50"
-                      fontSize="md"
-                      h="12"
+                      borderRadius="lg"
+                      border="1px solid"
+                      borderColor="gray.300"
+                      _focus={{ borderColor: 'blue.500' }}
                     >
                       {(formMode === 'kaufen' ? fahrzeugtypenKaufen : fahrzeugtypenVerkaufen).map((typ) => (
                         <option key={typ} value={typ}>{typ}</option>
@@ -206,13 +244,10 @@ export function KontaktSection() {
                         placeholder="Hersteller auswählen"
                         value={formData.hersteller}
                         onChange={(e) => handleInputChange('hersteller', e.target.value)}
-                        borderRadius="xl"
-                        border="2px solid"
-                        borderColor="gray.200"
-                        _focus={{ borderColor: 'blue.500', shadow: 'lg' }}
-                        bg="gray.50"
-                        fontSize="md"
-                        h="12"
+                        borderRadius="lg"
+                        border="1px solid"
+                        borderColor="gray.300"
+                        _focus={{ borderColor: 'blue.500' }}
                       >
                         {hersteller.map((h) => (
                           <option key={h} value={h}>{h}</option>
@@ -228,13 +263,10 @@ export function KontaktSection() {
                         placeholder="z.B. Actros, TGX, FH"
                         value={formData.modell}
                         onChange={(e) => handleInputChange('modell', e.target.value)}
-                        borderRadius="xl"
-                        border="2px solid"
-                        borderColor="gray.200"
-                        _focus={{ borderColor: 'blue.500', shadow: 'lg' }}
-                        bg="gray.50"
-                        fontSize="md"
-                        h="12"
+                        borderRadius="lg"
+                        border="1px solid"
+                        borderColor="gray.300"
+                        _focus={{ borderColor: 'blue.500' }}
                       />
                     </FormControl>
                   </SimpleGrid>
@@ -249,38 +281,34 @@ export function KontaktSection() {
                         placeholder="z.B. 450.000 km"
                         value={formData.kilometerstand}
                         onChange={(e) => handleInputChange('kilometerstand', e.target.value)}
-                        borderRadius="xl"
-                        border="2px solid"
-                        borderColor="gray.200"
-                        _focus={{ borderColor: 'blue.500', shadow: 'lg' }}
-                        bg="gray.50"
-                        fontSize="md"
-                        h="12"
+                        borderRadius="lg"
+                        border="1px solid"
+                        borderColor="gray.300"
+                        _focus={{ borderColor: 'blue.500' }}
                       />
                     </FormControl>
                   )}
 
-                  {/* File Upload Area (nur bei Verkauf) */}
+                  {/* File Upload (nur bei Verkauf) */}
                   {formMode === 'verkaufen' && (
                     <Box
                       w="full"
-                      h="100px"
-                      border="2px dashed"
-                      borderColor="blue.300"
-                      borderRadius="xl"
-                      bg="blue.50"
+                      h="80px"
+                      border="1px dashed"
+                      borderColor="gray.400"
+                      borderRadius="lg"
+                      bg="gray.50"
                       display="flex"
                       alignItems="center"
                       justifyContent="center"
                       cursor="pointer"
-                      _hover={{ bg: 'blue.100', borderColor: 'blue.400' }}
-                      transition="all 0.3s"
+                      _hover={{ bg: 'gray.100' }}
                     >
-                      <VStack spacing={2}>
-                        <Text fontSize="lg" fontWeight="600" color="blue.600">
-                          📸 Bilder/Videos hochladen
+                      <VStack spacing={1}>
+                        <Text fontSize="md" fontWeight="600" color="gray.600">
+                          📸 Bilder hochladen
                         </Text>
-                        <Text fontSize="sm" color="blue.500">
+                        <Text fontSize="sm" color="gray.500">
                           Fahrzeug, Fahrzeugschein, Tachostand
                         </Text>
                       </VStack>
@@ -297,13 +325,10 @@ export function KontaktSection() {
                         placeholder="Ihr Vorname"
                         value={formData.vorname}
                         onChange={(e) => handleInputChange('vorname', e.target.value)}
-                        borderRadius="xl"
-                        border="2px solid"
-                        borderColor="gray.200"
-                        _focus={{ borderColor: 'blue.500', shadow: 'lg' }}
-                        bg="gray.50"
-                        fontSize="md"
-                        h="12"
+                        borderRadius="lg"
+                        border="1px solid"
+                        borderColor="gray.300"
+                        _focus={{ borderColor: 'blue.500' }}
                       />
                     </FormControl>
 
@@ -315,13 +340,10 @@ export function KontaktSection() {
                         placeholder="Ihr Nachname"
                         value={formData.nachname}
                         onChange={(e) => handleInputChange('nachname', e.target.value)}
-                        borderRadius="xl"
-                        border="2px solid"
-                        borderColor="gray.200"
-                        _focus={{ borderColor: 'blue.500', shadow: 'lg' }}
-                        bg="gray.50"
-                        fontSize="md"
-                        h="12"
+                        borderRadius="lg"
+                        border="1px solid"
+                        borderColor="gray.300"
+                        _focus={{ borderColor: 'blue.500' }}
                       />
                     </FormControl>
                   </SimpleGrid>
@@ -335,13 +357,10 @@ export function KontaktSection() {
                         placeholder="z.B. 33602"
                         value={formData.plz}
                         onChange={(e) => handleInputChange('plz', e.target.value)}
-                        borderRadius="xl"
-                        border="2px solid"
-                        borderColor="gray.200"
-                        _focus={{ borderColor: 'blue.500', shadow: 'lg' }}
-                        bg="gray.50"
-                        fontSize="md"
-                        h="12"
+                        borderRadius="lg"
+                        border="1px solid"
+                        borderColor="gray.300"
+                        _focus={{ borderColor: 'blue.500' }}
                       />
                     </FormControl>
 
@@ -354,13 +373,10 @@ export function KontaktSection() {
                         placeholder="ihre@email.de"
                         value={formData.email}
                         onChange={(e) => handleInputChange('email', e.target.value)}
-                        borderRadius="xl"
-                        border="2px solid"
-                        borderColor="gray.200"
-                        _focus={{ borderColor: 'blue.500', shadow: 'lg' }}
-                        bg="gray.50"
-                        fontSize="md"
-                        h="12"
+                        borderRadius="lg"
+                        border="1px solid"
+                        borderColor="gray.300"
+                        _focus={{ borderColor: 'blue.500' }}
                       />
                     </FormControl>
                   </SimpleGrid>
@@ -371,35 +387,15 @@ export function KontaktSection() {
                       <FormLabel fontWeight="600" color="gray.700">
                         Telefon
                       </FormLabel>
-                      <HStack spacing={0}>
-                        <Box
-                          bg="gray.100"
-                          px={3}
-                          py={3}
-                          borderLeftRadius="xl"
-                          border="2px solid"
-                          borderColor="gray.200"
-                          borderRight="none"
-                          display="flex"
-                          alignItems="center"
-                        >
-                          <Text fontWeight="600">🇩🇪 +49</Text>
-                        </Box>
-                        <Input 
-                          placeholder="1234 567890"
-                          value={formData.telefon}
-                          onChange={(e) => handleInputChange('telefon', e.target.value)}
-                          borderLeftRadius="0"
-                          borderRightRadius="xl"
-                          border="2px solid"
-                          borderColor="gray.200"
-                          borderLeft="none"
-                          _focus={{ borderColor: 'blue.500', shadow: 'lg' }}
-                          bg="gray.50"
-                          fontSize="md"
-                          h="12"
-                        />
-                      </HStack>
+                      <Input 
+                        placeholder="0123 456789"
+                        value={formData.telefon}
+                        onChange={(e) => handleInputChange('telefon', e.target.value)}
+                        borderRadius="lg"
+                        border="1px solid"
+                        borderColor="gray.300"
+                        _focus={{ borderColor: 'blue.500' }}
+                      />
                     </FormControl>
 
                     <FormControl>
@@ -410,13 +406,10 @@ export function KontaktSection() {
                         placeholder="Wann sind Sie erreichbar?"
                         value={formData.erreichbarkeit}
                         onChange={(e) => handleInputChange('erreichbarkeit', e.target.value)}
-                        borderRadius="xl"
-                        border="2px solid"
-                        borderColor="gray.200"
-                        _focus={{ borderColor: 'blue.500', shadow: 'lg' }}
-                        bg="gray.50"
-                        fontSize="md"
-                        h="12"
+                        borderRadius="lg"
+                        border="1px solid"
+                        borderColor="gray.300"
+                        _focus={{ borderColor: 'blue.500' }}
                       >
                         {erreichbarkeitszeiten.map((zeit) => (
                           <option key={zeit} value={zeit}>{zeit}</option>
@@ -437,14 +430,11 @@ export function KontaktSection() {
                       }
                       value={formData.nachricht}
                       onChange={(e) => handleInputChange('nachricht', e.target.value)}
-                      borderRadius="xl"
-                      border="2px solid"
-                      borderColor="gray.200"
-                      _focus={{ borderColor: 'blue.500', shadow: 'lg' }}
-                      bg="gray.50"
-                      fontSize="md"
+                      borderRadius="lg"
+                      border="1px solid"
+                      borderColor="gray.300"
+                      _focus={{ borderColor: 'blue.500' }}
                       minH="100px"
-                      resize="vertical"
                     />
                   </FormControl>
 
@@ -453,54 +443,40 @@ export function KontaktSection() {
                     type="submit"
                     size="lg"
                     w="full"
-                    bg={formMode === 'kaufen' 
-                      ? 'linear-gradient(135deg, #3b82f6, #1e40af)' 
-                      : 'linear-gradient(135deg, #dc2626, #b91c1c)'
-                    }
+                    bg="blue.600"
                     color="white"
-                    _hover={{
-                      bg: formMode === 'kaufen' 
-                        ? 'linear-gradient(135deg, #2563eb, #1e3a8a)' 
-                        : 'linear-gradient(135deg, #b91c1c, #991b1b)',
-                      transform: 'translateY(-2px)',
-                      shadow: '2xl'
-                    }}
-                    transition="all 0.3s"
-                    borderRadius="xl"
-                    py={6}
+                    _hover={{ bg: 'blue.700' }}
+                    borderRadius="lg"
+                    h="56px"
                     fontSize="lg"
-                    fontWeight="700"
-                    shadow="xl"
+                    fontWeight="600"
+                    isLoading={isSubmitting}
+                    loadingText="Wird gesendet..."
+                    isDisabled={!formData.vorname || !formData.nachname || !formData.email || !formData.telefon || !formData.fahrzeugtyp || !formData.hersteller}
                   >
                     {formMode === 'kaufen' 
-                      ? '🚛 Anfrage senden - Fahrzeug finden' 
-                      : '💰 Fahrzeug bewerten lassen'
+                      ? 'Anfrage senden' 
+                      : 'Fahrzeug bewerten lassen'
                     }
                   </Button>
 
-                  <Text fontSize="xs" color="gray.500" textAlign="center" lineHeight="tall">
-                    Durch das Absenden stimmen Sie der Verarbeitung Ihrer Daten gemäß unserer{' '}
-                    <Text as="span" color="blue.500" textDecoration="underline" cursor="pointer">
-                      Datenschutzerklärung
-                    </Text>{' '}
-                    zu. Wir melden uns innerhalb von 24h bei Ihnen.
+                  <Text fontSize="xs" color="gray.500" textAlign="center">
+                    Wir melden uns innerhalb von 24 Stunden bei Ihnen.
                   </Text>
                 </VStack>
               </form>
             </Box>
           </Box>
 
-          {/* Map & Contact Info */}
+          {/* Contact Info & Map */}
           <VStack spacing={8} align="stretch">
-            {/* Map */}
             <Box
               bg="white"
-              borderRadius="3xl"
+              borderRadius="2xl"
               overflow="hidden"
-              shadow="2xl"
               border="1px solid"
-              borderColor="gray.100"
-              h="400px"
+              borderColor="gray.200"
+              h="350px"
             >
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2449.123456789!2d8.123456!3d52.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sBr%C3%B6nninghauser%20Str.%2035B%2C%2033729%20Bielefeld!5e0!3m2!1sde!2sde!4v1234567890123"
@@ -514,26 +490,24 @@ export function KontaktSection() {
               />
             </Box>
 
-            {/* Contact Info */}
-            <VStack spacing={6}>
+            <VStack spacing={4}>
               <Box
                 bg="white"
                 borderRadius="2xl"
                 p={6}
-                shadow="xl"
                 border="1px solid"
-                borderColor="gray.100"
+                borderColor="gray.200"
                 w="full"
               >
                 <VStack spacing={4} align="start">
                   <Heading as="h3" size="lg" color="gray.800">
                     📍 Unser Standort
                   </Heading>
-                  <VStack align="start" spacing={2}>
-                    <Text fontSize="md" fontWeight="600" color="gray.700">
+                  <VStack align="start" spacing={1}>
+                    <Text fontSize="md" color="gray.700">
                       Brönninghauser Str. 35B
                     </Text>
-                    <Text fontSize="md" fontWeight="600" color="gray.700">
+                    <Text fontSize="md" color="gray.700">
                       33729 Bielefeld
                     </Text>
                   </VStack>
@@ -544,9 +518,8 @@ export function KontaktSection() {
                 bg="white"
                 borderRadius="2xl"
                 p={6}
-                shadow="xl"
                 border="1px solid"
-                borderColor="gray.100"
+                borderColor="gray.200"
                 w="full"
               >
                 <VStack spacing={4} align="start">
@@ -555,13 +528,13 @@ export function KontaktSection() {
                   </Heading>
                   <VStack align="start" spacing={2}>
                     <Text fontSize="md" color="gray.700">
-                      <strong>Telefon:</strong> 0521 / 123 456 78
+                      <Text as="span" fontWeight="600">Telefon:</Text> 0521 / 123 456 78
                     </Text>
                     <Text fontSize="md" color="gray.700">
-                      <strong>E-Mail:</strong> info@lemoine-nutzfahrzeuge.de
+                      <Text as="span" fontWeight="600">E-Mail:</Text> info@lemoine-nutzfahrzeuge.de
                     </Text>
-                    <Text fontSize="md" color="gray.700">
-                      <strong>Öffnungszeiten:</strong>
+                    <Text fontSize="md" color="gray.700" fontWeight="600">
+                      Öffnungszeiten:
                     </Text>
                     <Text fontSize="sm" color="gray.600">
                       Mo-Fr: 8:00-18:00 Uhr<br />

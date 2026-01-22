@@ -4,6 +4,7 @@ import { HeroSection } from '@/components/HeroSection'
 import { AnkaufSection } from '@/components/AnkaufSection'
 import { ProzessSection } from '@/components/ProcessSection'
 import { BewertungenSection } from '@/components/BewertungenSection'
+import { UeberUnsSection } from '@/components/ueberuns'
 import { KontaktSection } from '@/components/KontaktSection'
 import { Footer } from '@/components/Footer'
 
@@ -21,6 +22,7 @@ export default function Home() {
       <Header />
       <main>
         <HeroSection />
+        <UeberUnsSection/>
         <AnkaufSection />
         <ProzessSection />
         <BewertungenSection />

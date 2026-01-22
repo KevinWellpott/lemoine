@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import {
   Box,
   Container,
@@ -14,31 +14,6 @@ import {
 
 export function ProzessSection() {
   const [activeMode, setActiveMode] = useState<'kaufen' | 'verkaufen'>('kaufen')
-  const [scrollProgress, setScrollProgress] = useState(0)
-
-  // Scroll-Animation für Zeitstrahl
-  useEffect(() => {
-    const handleScroll = () => {
-      const element = document.getElementById('prozess-section')
-      if (!element) return
-
-      const rect = element.getBoundingClientRect()
-      const elementHeight = rect.height
-      const windowHeight = window.innerHeight
-      
-      // Berechne Progress basierend auf Scroll-Position
-      const scrolled = Math.max(0, windowHeight - rect.top)
-      const maxScroll = elementHeight + windowHeight
-      const progress = Math.min(100, (scrolled / maxScroll) * 100)
-      
-      setScrollProgress(progress)
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    handleScroll() // Initial call
-    
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
   const kaufenSteps = [
     {
@@ -64,112 +39,68 @@ export function ProzessSection() {
   const verkaufenSteps = [
     {
       step: 1,
-      title: "Infos zu Ihrem Fahrzeug/Auflieger",
+      title: "Infos zu Ihrem Fahrzeug",
       description: "Senden Sie uns alle Angaben zu Ihrem Fahrzeug inkl. Hersteller, Kilometerstand, Baujahr, Bild des Fahrzeugscheins sowie Bilder oder Videos des LKW.",
       image: "/truck-info.jpg"
     },
     {
       step: 2,
-      title: "Bewertung Ihres Fahrzeugs/Aufliegers",
+      title: "Bewertung Ihres Fahrzeugs",
       description: "Unser Team wertet die von Ihnen gesendeten Informationen aus und meldet sich bei Ihnen innerhalb von 48 Stunden mit einem attraktiven Angebot.",
       image: "/bewertung.jpg"
     },
     {
       step: 3,
-      title: "Kaufvertrag, Überweisung, DEAL!",
-      description: "Sollte Ihnen unser Angebot zusagen, senden wir Ihnen ein Kaufvertrag zu. Sobald dieser unterschrieben ist, überweisen wir Ihnen den Kaufbetrag sofort. Wir kümmern uns auch um die Abholung.",
+      title: "Kaufvertrag & Überweisung",
+      description: "Sollte Ihnen unser Angebot zusagen, senden wir Ihnen ein Kaufvertrag zu. Sobald dieser unterschrieben ist, überweisen wir Ihnen den Kaufbetrag sofort.",
       image: "/deal.jpg"
     }
   ]
 
   const activeSteps = activeMode === 'kaufen' ? kaufenSteps : verkaufenSteps
-  const sectionBg = activeMode === 'kaufen' 
-    ? 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%)'
-    : 'white'
-  const textColor = activeMode === 'kaufen' ? 'white' : 'gray.800'
 
   return (
     <Box 
-      id="prozess-section"
       py={{ base: 16, md: 24 }} 
-      bg={sectionBg}
-      color={textColor}
-      position="relative"
-      overflow="hidden"
-      transition="all 0.6s ease"
+      bg={activeMode === 'kaufen' ? 'blue.600' : 'white'}
+      color={activeMode === 'kaufen' ? 'white' : 'gray.900'}
     >
-      {/* Glassmorphism Background Shapes für Kaufen-Modus */}
-      {activeMode === 'kaufen' && (
-        <>
-          <Box
-            position="absolute"
-            top="10%"
-            right="5%"
-            w="300px"
-            h="300px"
-            bg="rgba(255,255,255,0.1)"
-            borderRadius="50%"
-            filter="blur(60px)"
-            zIndex={0}
-          />
-          <Box
-            position="absolute"
-            bottom="20%"
-            left="10%"
-            w="400px"
-            h="400px"
-            bg="rgba(255,255,255,0.05)"
-            borderRadius="50%"
-            filter="blur(80px)"
-            zIndex={0}
-          />
-        </>
-      )}
-
-      <Container maxW="7xl" position="relative" zIndex={1}>
+      <Container maxW="6xl">
         {/* Toggle Buttons */}
-        <Flex justify="center" mb={{ base: 10, md: 16 }}>
+        <Flex justify="center" mb={{ base: 12, md: 16 }}>
           <HStack 
-            bg={activeMode === 'kaufen' ? 'rgba(255,255,255,0.15)' : 'gray.100'}
+            bg={activeMode === 'kaufen' ? 'rgba(255,255,255,0.1)' : 'gray.100'}
             borderRadius="full"
             p={1}
             spacing={0}
-            backdropFilter={activeMode === 'kaufen' ? 'blur(10px)' : 'none'}
-            border={activeMode === 'kaufen' ? '1px solid rgba(255,255,255,0.2)' : '1px solid gray.200'}
           >
             <Button
               onClick={() => setActiveMode('kaufen')}
-              bg={activeMode === 'kaufen' ? 'rgba(255,255,255,0.9)' : 'transparent'}
-              color={activeMode === 'kaufen' ? 'blue.600' : 'white'}
+              bg={activeMode === 'kaufen' ? 'white' : 'transparent'}
+              color={activeMode === 'kaufen' ? 'blue.600' : 'gray.600'}
               _hover={{ 
-                bg: activeMode === 'kaufen' ? 'white' : 'rgba(255,255,255,0.1)',
-                transform: 'scale(1.02)'
+                bg: activeMode === 'kaufen' ? 'gray.50' : 'rgba(0,0,0,0.05)'
               }}
               borderRadius="full"
-              px={8}
+              px={6}
               py={3}
-              fontWeight="700"
+              fontWeight="600"
               fontSize="md"
-              transition="all 0.3s"
-              border="none"
             >
               🚛 LKW kaufen
             </Button>
             <Button
               onClick={() => setActiveMode('verkaufen')}
-              bg={activeMode === 'verkaufen' ? 'blue.500' : 'transparent'}
+              bg={activeMode === 'verkaufen' ? 'blue.600' : 'transparent'}
               color={activeMode === 'verkaufen' ? 'white' : (activeMode === 'kaufen' ? 'rgba(255,255,255,0.8)' : 'gray.600')}
               _hover={{ 
-                bg: activeMode === 'verkaufen' ? 'blue.600' : (activeMode === 'kaufen' ? 'rgba(255,255,255,0.1)' : 'gray.100'),
-                transform: 'scale(1.02)'
+                bg: activeMode === 'verkaufen' ? 'blue.700' : 'rgba(0,0,0,0.05)'
               }}
               borderRadius="full"
-              px={8}
+              px={6}
               py={3}
-              fontWeight="700"
+              fontWeight="600"
               fontSize="md"
-              transition="all 0.3s"
-              border="none"
             >
               💰 LKW verkaufen
             </Button>
@@ -177,200 +108,109 @@ export function ProzessSection() {
         </Flex>
 
         {/* Header */}
-        <Box textAlign="center" mb={{ base: 12, md: 20 }}>
-          {activeMode === 'verkaufen' && (
-            <Box
-             bgGradient="linear(135deg, #1e40af, #3b82f6)"
-              color="white"
-              py={4}
-              px={8}
-              borderRadius="2xl"
-              display="inline-block"
-              transform="rotate(-1deg)"
-              shadow="2xl"
-              mb={8}
-              _hover={{ transform: "rotate(0deg)", transition: "all 0.3s" }}
-            >
-              <Heading 
-                as="h2" 
-                fontSize={{ base: "xl", md: "2xl", lg: "3xl" }}
-                fontWeight="800"
-              >
-                So einfach kriegen Sie Ihren LKW oder Auflieger verkauft
-              </Heading>
-            </Box>
-          )}
-          
-          {activeMode === 'kaufen' && (
-            <Heading 
-              as="h2" 
-              fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}
-              fontWeight="800"
-              mb={6}
-              textShadow="0 4px 12px rgba(0,0,0,0.3)"
-            >
-              So einfach kommen Sie zu Ihrem neuen LKW
-            </Heading>
-          )}
-        </Box>
-
-        {/* Timeline */}
-        <Box position="relative">
-          {/* Animated Timeline Line */}
-          <Box
-            position="absolute"
-            left="50%"
-            top="0"
-            transform="translateX(-50%)"
-            w="4px"
-            h="full"
-            bg={activeMode === 'kaufen' ? 'rgba(255,255,255,0.2)' : 'gray.200'}
-            borderRadius="full"
-            display={{ base: 'none', lg: 'block' }}
+        <Box textAlign="center" mb={{ base: 12, md: 16 }}>
+          <Heading 
+            as="h2" 
+            fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}
+            fontWeight="700"
+            mb={6}
           >
-            <Box
-              w="full"
-              bg={activeMode === 'kaufen' ? 'rgba(255,255,255,0.8)' : 'blue.500'}
-              borderRadius="full"
-              transition="height 0.3s ease"
-              height={`${scrollProgress}%`}
-            />
-          </Box>
-
-          {/* Steps */}
-          <VStack spacing={{ base: 12, lg: 20 }}>
-            {activeSteps.map((stepData, index) => (
-              <Flex
-                key={`${activeMode}-${stepData.step}`}
-                direction={{ base: 'column', lg: index % 2 === 0 ? 'row' : 'row-reverse' }}
-                align="center"
-                gap={{ base: 8, lg: 16 }}
-                maxW="100%"
-                position="relative"
-              >
-                {/* Step Number */}
-                <Box
-                  position={{ base: 'static', lg: 'absolute' }}
-                  left="50%"
-                  transform={{ base: 'none', lg: 'translateX(-50%)' }}
-                  zIndex={2}
-                  display={{ base: 'block', lg: 'block' }}
-                  mb={{ base: 4, lg: 0 }}
-                >
-                  <Box
-                    w={{ base: '60px', md: '80px' }}
-                    h={{ base: '60px', md: '80px' }}
-                    bg={activeMode === 'kaufen' ? 'rgba(255,255,255,0.9)' : 'gray.800'}
-                    color={activeMode === 'kaufen' ? 'blue.600' : 'white'}
-                    borderRadius="full"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                    fontSize={{ base: '2xl', md: '3xl' }}
-                    fontWeight="800"
-                    shadow="2xl"
-                    border={activeMode === 'kaufen' ? '3px solid rgba(255,255,255,0.3)' : '3px solid blue.200'}
-                  >
-                    {stepData.step}
-                  </Box>
-                </Box>
-
-                {/* Content */}
-                <Box flex="1" maxW={{ base: 'full', lg: '45%' }}>
-                  <Box
-                    bg={activeMode === 'kaufen' ? 'rgba(255,255,255,0.15)' : 'white'}
-                    backdropFilter={activeMode === 'kaufen' ? 'blur(15px)' : 'none'}
-                    border={activeMode === 'kaufen' ? '1px solid rgba(255,255,255,0.2)' : '1px solid gray.200'}
-                    borderRadius="2xl"
-                    p={{ base: 6, md: 8 }}
-                    shadow="2xl"
-                    _hover={{ 
-                      transform: 'translateY(-4px)',
-                      shadow: '3xl',
-                      transition: 'all 0.3s'
-                    }}
-                  >
-                    <Heading 
-                      as="h3" 
-                      fontSize={{ base: 'xl', md: '2xl' }}
-                      mb={4}
-                      fontWeight="700"
-                      color={activeMode === 'kaufen' ? 'white' : 'gray.800'}
-                    >
-                      {stepData.title}
-                    </Heading>
-                    <Text 
-                      fontSize={{ base: 'md', md: 'lg' }}
-                      lineHeight="tall"
-                      opacity={activeMode === 'kaufen' ? 0.9 : 0.8}
-                      color={activeMode === 'kaufen' ? 'white' : 'gray.600'}
-                    >
-                      {stepData.description}
-                    </Text>
-                  </Box>
-                </Box>
-
-                {/* Image */}
-                <Box flex="1" maxW={{ base: 'full', lg: '45%' }}>
-                  <Box
-                    bg={activeMode === 'kaufen' ? 'rgba(255,255,255,0.1)' : 'gray.50'}
-                    borderRadius="2xl"
-                    overflow="hidden"
-                    shadow="2xl"
-                    _hover={{ 
-                      transform: 'scale(1.02)',
-                      transition: 'all 0.3s'
-                    }}
-                  >
-                    <Image
-                      src={stepData.image}
-                      alt={stepData.title}
-                      w="full"
-                      h={{ base: '250px', md: '300px' }}
-                      objectFit="cover"
-                    />
-                  </Box>
-                </Box>
-              </Flex>
-            ))}
-          </VStack>
+            {activeMode === 'kaufen' 
+              ? 'So einfach kommen Sie zu Ihrem neuen LKW'
+              : 'So einfach verkaufen Sie Ihren LKW'
+            }
+          </Heading>
         </Box>
+
+        {/* Steps */}
+        <VStack spacing={{ base: 12, md: 16 }}>
+          {activeSteps.map((stepData, index) => (
+            <Flex
+              key={`${activeMode}-${stepData.step}`}
+              direction={{ base: 'column', lg: index % 2 === 0 ? 'row' : 'row-reverse' }}
+              align="center"
+              gap={{ base: 8, lg: 12 }}
+              maxW="100%"
+            >
+              {/* Step Number */}
+              <Box
+                w="80px"
+                h="80px"
+                bg={activeMode === 'kaufen' ? 'white' : 'blue.600'}
+                color={activeMode === 'kaufen' ? 'blue.600' : 'white'}
+                borderRadius="full"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                fontSize="2xl"
+                fontWeight="700"
+                flexShrink={0}
+              >
+                {stepData.step}
+              </Box>
+
+              {/* Content */}
+              <Box flex="1" maxW={{ base: 'full', lg: '45%' }}>
+                <Box
+                  bg={activeMode === 'kaufen' ? 'rgba(255,255,255,0.1)' : 'gray.50'}
+                  borderRadius="2xl"
+                  p={{ base: 6, md: 8 }}
+                  border="1px solid"
+                  borderColor={activeMode === 'kaufen' ? 'rgba(255,255,255,0.2)' : 'gray.200'}
+                >
+                  <Heading 
+                    as="h3" 
+                    fontSize={{ base: 'xl', md: '2xl' }}
+                    mb={4}
+                    fontWeight="700"
+                  >
+                    {stepData.title}
+                  </Heading>
+                  <Text 
+                    fontSize={{ base: 'md', md: 'lg' }}
+                    lineHeight="1.6"
+                    opacity={0.9}
+                  >
+                    {stepData.description}
+                  </Text>
+                </Box>
+              </Box>
+
+              {/* Image */}
+              <Box flex="1" maxW={{ base: 'full', lg: '45%' }}>
+                <Box
+                  borderRadius="2xl"
+                  overflow="hidden"
+                  border="1px solid"
+                  borderColor={activeMode === 'kaufen' ? 'rgba(255,255,255,0.2)' : 'gray.200'}
+                >
+                  <Image
+                    src={stepData.image}
+                    alt={stepData.title}
+                    w="full"
+                    h={{ base: '250px', md: '300px' }}
+                    objectFit="cover"
+                  />
+                </Box>
+              </Box>
+            </Flex>
+          ))}
+        </VStack>
 
         {/* Final CTA */}
-        <Box textAlign="center" mt={{ base: 12, md: 20 }}>
-          {activeMode === 'verkaufen' && (
-            <Box
-              bg="linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)"
-              color="white"
-              py={4}
-              px={8}
-              borderRadius="2xl"
-              display="inline-block"
-              mb={8}
-              shadow="2xl"
-            >
-              <Heading fontSize={{ base: 'lg', md: 'xl' }} fontWeight="700">
-                Überzeugt? Dann senden Sie uns jetzt die Infos zu Ihrem Fahrzeug oder Auflieger!
-              </Heading>
-            </Box>
-          )}
-          
+        <Box textAlign="center" mt={{ base: 16, md: 20 }}>
           <Button
-            size="xl"
-            bg={activeMode === 'kaufen' ? 'rgba(255,255,255,0.9)' : 'linear-gradient(135deg, #dc2626, #b91c1c)'}
+            size="lg"
+            h="56px"
+            bg={activeMode === 'kaufen' ? 'white' : 'blue.600'}
             color={activeMode === 'kaufen' ? 'blue.600' : 'white'}
             _hover={{ 
-              bg: activeMode === 'kaufen' ? 'white' : 'linear-gradient(135deg, #b91c1c, #991b1b)',
-              transform: 'translateY(-3px)',
-              boxShadow: '0 15px 35px rgba(0,0,0,0.2)'
+              bg: activeMode === 'kaufen' ? 'gray.50' : 'blue.700'
             }}
-            transition="all 0.3s"
             borderRadius="xl"
-            px={10}
-            py={6}
+            px={8}
             fontSize="lg"
-            fontWeight="700"
-            shadow="2xl"
+            fontWeight="600"
           >
             {activeMode === 'kaufen' ? '🚛 Jetzt LKW finden' : '💰 Jetzt Fahrzeug verkaufen'}
           </Button>
