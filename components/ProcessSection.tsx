@@ -20,19 +20,19 @@ export function ProzessSection() {
       step: 1,
       title: "Fahrzeug finden",
       description: "Durchsuchen Sie unsere große Auswahl an über 150 geprüften LKW und Nutzfahrzeugen. Finden Sie das perfekte Fahrzeug für Ihre Bedürfnisse.",
-      image: "/fahrzeug-finden.jpg"
+      image: "/popel.webp"
     },
     {
       step: 2,
       title: "Persönliche Beratung",
       description: "Unser Expertenteam berät Sie umfassend zu Ihrem Wunschfahrzeug, Finanzierungsmöglichkeiten und allen technischen Details.",
-      image: "/beratung.jpg"
+      image: "/chef.webp"
     },
     {
       step: 3,
       title: "Kaufvertrag & Übergabe",
       description: "Schnelle Kaufabwicklung mit transparenten Verträgen. Ihr neues Fahrzeug ist sofort einsatzbereit und wird professionell übergeben.",
-      image: "/uebergabe.jpg"
+      image: "/kaufvertrag.webp"
     }
   ]
 
@@ -62,7 +62,7 @@ export function ProzessSection() {
   return (
     <Box 
       py={{ base: 16, md: 24 }} 
-      bg={activeMode === 'kaufen' ? 'blue.600' : 'white'}
+      bg={activeMode === 'kaufen' ? ' rgba(30,54,137, 0.8)' : 'white'}
       color={activeMode === 'kaufen' ? 'white' : 'gray.900'}
     >
       <Container maxW="6xl">
@@ -87,7 +87,7 @@ export function ProzessSection() {
               fontWeight="600"
               fontSize="md"
             >
-              🚛 LKW kaufen
+              LKW kaufen
             </Button>
             <Button
               onClick={() => setActiveMode('verkaufen')}
@@ -102,7 +102,7 @@ export function ProzessSection() {
               fontWeight="600"
               fontSize="md"
             >
-              💰 LKW verkaufen
+              LKW verkaufen
             </Button>
           </HStack>
         </Flex>
@@ -136,7 +136,7 @@ export function ProzessSection() {
               <Box
                 w="80px"
                 h="80px"
-                bg={activeMode === 'kaufen' ? 'white' : 'blue.600'}
+                bg={activeMode === 'kaufen' ? 'white' : '#1E3689'}
                 color={activeMode === 'kaufen' ? 'blue.600' : 'white'}
                 borderRadius="full"
                 display="flex"
@@ -212,7 +212,7 @@ export function ProzessSection() {
             fontSize="lg"
             fontWeight="600"
           >
-            {activeMode === 'kaufen' ? '🚛 Jetzt LKW finden' : '💰 Jetzt Fahrzeug verkaufen'}
+            {activeMode === 'kaufen' ? 'Jetzt LKW finden' : 'Jetzt Fahrzeug verkaufen'}
           </Button>
         </Box>
       </Container>

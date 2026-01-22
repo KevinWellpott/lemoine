@@ -19,7 +19,7 @@ export function UeberUnsSection() {
     },
     {
       number: "4.8/5",
-      label: "Kundenbewertung",
+      label: "Kundenbewertung", 
       description: "Über 70 positive Bewertungen auf Google & mobile.de"
     },
     {
@@ -61,21 +61,23 @@ export function UeberUnsSection() {
             </Text>
           </Heading>
           
-          <Text 
+          <Heading
+            as="h3"
             fontSize={{ base: "lg", md: "xl" }} 
             color="gray.600" 
             maxW="700px"
             lineHeight="1.6"
+            fontWeight="400"
           >
             Seit 1998 Ihr vertrauensvoller Partner für LKW und Nutzfahrzeuge 
             in Bielefeld. Familienbetrieb mit Leidenschaft für Qualität.
-          </Text>
+          </Heading>
         </VStack>
 
         <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={{ base: 12, lg: 16 }} mb={{ base: 12, md: 16 }}>
           {/* Story */}
           <VStack align="start" spacing={6}>
-            <Heading as="h3" fontSize={{ base: "xl", md: "2xl" }} fontWeight="700" color="gray.900">
+            <Heading as="h4" fontSize={{ base: "xl", md: "2xl" }} fontWeight="700" color="gray.900">
               Unsere Geschichte
             </Heading>
             
@@ -111,10 +113,10 @@ export function UeberUnsSection() {
           >
             <VStack spacing={3}>
               <Text fontSize="4xl">🚛</Text>
-              <Text color="gray.500" fontWeight="600" textAlign="center">
+              <Heading as="h5" color="gray.500" fontWeight="600" textAlign="center" fontSize="md">
                 Wilhelm Lemoine<br />
                 Geschäftsführer seit 1998
-              </Text>
+              </Heading>
             </VStack>
           </Box>
         </SimpleGrid>
@@ -131,13 +133,14 @@ export function UeberUnsSection() {
                 {highlight.number}
               </Text>
               <VStack spacing={1}>
-                <Text 
+                <Heading
+                  as="h5"
                   fontSize={{ base: "sm", md: "md" }} 
                   fontWeight="600" 
                   color="gray.900"
                 >
                   {highlight.label}
-                </Text>
+                </Heading>
                 <Text 
                   fontSize="sm" 
                   color="gray.600" 
@@ -160,7 +163,7 @@ export function UeberUnsSection() {
           borderColor="gray.200"
         >
           <VStack spacing={6}>
-            <Heading as="h3" fontSize={{ base: "xl", md: "2xl" }} fontWeight="700" color="gray.900" textAlign="center">
+            <Heading as="h4" fontSize={{ base: "xl", md: "2xl" }} fontWeight="700" color="gray.900" textAlign="center">
               Was uns auszeichnet
             </Heading>
             
@@ -190,7 +193,7 @@ export function UeberUnsSection() {
 
         {/* Location */}
         <VStack spacing={6} textAlign="center" mt={{ base: 12, md: 16 }}>
-          <Heading as="h3" fontSize={{ base: "xl", md: "2xl" }} fontWeight="700" color="gray.900">
+          <Heading as="h4" fontSize={{ base: "xl", md: "2xl" }} fontWeight="700" color="gray.900">
             Mitten in Ostwestfalen
           </Heading>
           
@@ -204,13 +207,6 @@ export function UeberUnsSection() {
             und das deutsche Autobahnnetz. Besuchen Sie uns in der Brönninghauser Straße 35B 
             oder kontaktieren Sie uns für eine persönliche Beratung.
           </Text>
-          
-          <HStack spacing={8} color="gray.600" fontSize="sm" flexWrap="wrap" justify="center">
-            <Text>📍 Bielefeld-Altenhagen</Text>
-            <Text>🚗 Direkt an der A2</Text>
-            <Text>🕐 Mo-Fr 9-18 Uhr</Text>
-            <Text>📞 0521 / 390 622 2</Text>
-          </HStack>
         </VStack>
       </Container>
     </Box>

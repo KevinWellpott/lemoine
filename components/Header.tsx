@@ -75,13 +75,14 @@ export function Header() {
               border="1px solid"
               borderColor="#1E3689"
             >
-              <Text display={{ base: "none", sm: "block" }}>
+              <Text >
                 Kontakt
               </Text>
               
             </Button>
             
             <Button
+             
               size={{ base: "sm", md: "md" }}
               variant="outline"
               borderColor="blue.600"
@@ -98,8 +99,9 @@ export function Header() {
               borderRadius="lg"
               px={{ base: 4, md: 6 }}
               fontWeight="600"
+              
             >
-              <Text display={{ base: "none", sm: "block" }}>
+              <Text >
                 Inserate
               </Text>
           

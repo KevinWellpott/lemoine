@@ -7,113 +7,207 @@ import {
   Button,
   HStack,
   VStack,
+  Flex,
 } from '@chakra-ui/react'
 
 export function HeroSection() {
   return (
-    <Box bg="white" pt={{ base: 20, md: 32 }} pb={{ base: 16, md: 24 }}>
-      <Container maxW="4xl" px={{ base: 4, md: 8 }}>
-        <VStack spacing={{ base: 8, md: 12 }} textAlign="center" align="center">
-          {/* Eyebrow */}
-          <Text
-            fontSize="sm"
-            fontWeight="600"
-            color="blue.600"
-            textTransform="uppercase"
-            letterSpacing="wider"
-          >
-            Lemoine Nutzfahrzeuge
-          </Text>
+    <Box 
+      bg="white"
+      pt={{ base: 20, md: 32 }} 
+      pb={{ base: 16, md: 24 }}
+      position="relative"
+    >
+      {/* Subtle geometric pattern */}
+      <Box
+        position="absolute"
+        top="0"
+        left="0"
+        right="0"
+        bottom="0"
+        opacity="0.02"
+        backgroundImage="radial-gradient(circle at 25% 25%, #3b82f6 2px, transparent 2px), radial-gradient(circle at 75% 75%, #3b82f6 1px, transparent 1px)"
+        backgroundSize="60px 60px"
+        backgroundPosition="0 0, 30px 30px"
+      />
 
-          {/* Main Headline */}
-          <Heading
-            as="h1"
-            fontSize={{ base: "5xl", md: "6xl", lg: "7xl" }}
-            fontWeight="700"
-            lineHeight="0.9"
-            color="gray.900"
-            letterSpacing="tight"
-            maxW="800px"
-          >
-            LKW & Nutzfahrzeuge{' '}
-            <Text as="span" color="blue.600">
-              vom Profi
+      <Container maxW="5xl" px={{ base: 4, md: 8 }} position="relative">
+        <VStack spacing={{ base: 12, md: 16 }} textAlign="center" align="center">
+          
+          {/* Header with asymmetric layout */}
+          <VStack spacing={6} maxW="900px">
+          
+
+            <Heading
+              as="h1"
+              fontSize={{ base: "4xl", sm: "5xl", md: "6xl", lg: "7xl" }}
+              fontWeight="800"
+              lineHeight="0.85"
+              color="gray.900"
+              letterSpacing="-0.02em"
+            >
+              LKW & Nutzfahrzeuge
+              <br />
+              <Text 
+                as="span" 
+                color="blue.600"
+                position="relative"
+                _after={{
+                  content: '""',
+                  position: "absolute",
+                  bottom: { base: "4px", md: "8px" },
+                  left: "0",
+                  right: "0",
+                  height: { base: "3px", md: "4px" },
+                  bg: "blue.200",
+                  borderRadius: "full",
+                  opacity: 0.3
+                }}
+              >
+                vom Profi
+              </Text>
+            </Heading>
+
+            <Text
+              as="h3"
+              fontSize={{ base: "lg", md: "xl", lg: "2xl" }}
+              color="gray.600"
+              fontWeight="400"
+              lineHeight="1.6"
+              maxW="650px"
+              mt={4}
+            >
+              150+ geprüfte Fahrzeuge von Mercedes, MAN und Volvo.
+              <br />
+              <Text as="span" fontWeight="600" color="gray.700">
+                Finanzierung ab 0% möglich
+              </Text>
+              {' '}– direkt aus Bielefeld.
             </Text>
-          </Heading>
+          </VStack>
 
-          {/* Description */}
-          <Text
-            fontSize={{ base: "xl", md: "2xl" }}
-            color="gray.600"
-            fontWeight="400"
-            lineHeight="1.4"
+          {/* Unique stats layout */}
+          <Flex
+            direction={{ base: "column", md: "row" }}
+            gap={{ base: 6, md: 8 }}
+            align="center"
+            justify="center"
+            w="full"
             maxW="600px"
           >
-            150+ geprüfte Fahrzeuge von Mercedes, MAN und Volvo.
-            Finanzierung ab 0% möglich.
-          </Text>
-
-          {/* Stats */}
-          <HStack spacing={{ base: 8, md: 16 }} pt={4}>
-            <VStack spacing={0}>
-              <Text fontSize="3xl" fontWeight="700" color="gray.900" lineHeight="1">
-                25+
+            <VStack 
+              spacing={2}
+              flex="1"
+              p={6}
+              borderLeft={{ base: "none", md: "3px solid" }}
+              borderTop={{ base: "3px solid", md: "none" }}
+              borderColor="blue.500"
+              align={{ base: "center", md: "start" }}
+            >
+              <Text fontSize={{ base: "3xl", md: "4xl" }} fontWeight="800" color="blue.600" lineHeight="1">
+                27
               </Text>
-              <Text fontSize="md" color="gray.600" fontWeight="500">
-                Jahre
+              <Text fontSize="md" color="gray.600" fontWeight="600" textAlign={{ base: "center", md: "left" }}>
+                Jahre Erfahrung
+                <br />
+                <Text as="span" fontSize="sm" opacity={0.7}>
+                  im Nutzfahrzeughandel
+                </Text>
               </Text>
             </VStack>
-            <VStack spacing={0}>
-              <Text fontSize="3xl" fontWeight="700" color="gray.900" lineHeight="1">
+
+            <VStack spacing={2} flex="1" align="center" p={6}>
+              <Text fontSize={{ base: "3xl", md: "4xl" }} fontWeight="800" color="gray.900" lineHeight="1">
                 150+
               </Text>
-              <Text fontSize="md" color="gray.600" fontWeight="500">
-                Fahrzeuge
+              <Text fontSize="md" color="gray.600" fontWeight="600" textAlign="center">
+                Geprüfte Fahrzeuge
+                <br />
+                <Text as="span" fontSize="sm" opacity={0.7}>
+                  sofort verfügbar
+                </Text>
               </Text>
             </VStack>
-            <VStack spacing={0}>
-              <Text fontSize="3xl" fontWeight="700" color="gray.900" lineHeight="1">
-                98%
-              </Text>
-              <Text fontSize="md" color="gray.600" fontWeight="500">
-                Zufrieden
-              </Text>
-            </VStack>
-          </HStack>
 
-          {/* CTAs */}
-          <HStack spacing={4} pt={6} flexWrap="wrap" justify="center">
-            <Button
-              size="lg"
-              h="56px"
-              px={8}
-              bg="blue.600"
-              color="white"
-              fontSize="lg"
-              fontWeight="600"
-              borderRadius="xl"
-              _hover={{ bg: "blue.700" }}
-              as="a"
-              href="/kontakt"
+            <VStack 
+              spacing={2}
+              flex="1"
+              p={6}
+              borderRight={{ base: "none", md: "3px solid" }}
+              borderBottom={{ base: "3px solid", md: "none" }}
+              borderColor="green.500"
+              align={{ base: "center", md: "end" }}
             >
-Kontakt            </Button>
-            <Button
-              size="lg"
-              h="56px"
-              px={8}
-              variant="outline"
-              borderColor="gray.300"
-              color="gray.700"
-              fontSize="lg"
-              fontWeight="600"
-              borderRadius="xl"
-              _hover={{ borderColor: "blue.400", color: "blue.600" }}
-              as="a"
-              href="#fahrzeuge"
+              <Text fontSize={{ base: "3xl", md: "4xl" }} fontWeight="800" color="green.600" lineHeight="1">
+                4.8
+              </Text>
+              <Text fontSize="md" color="gray.600" fontWeight="600" textAlign={{ base: "center", md: "right" }}>
+                Google Bewertung
+                <br />
+                <Text as="span" fontSize="sm" opacity={0.7}>
+                  von unseren Kunden
+                </Text>
+              </Text>
+            </VStack>
+          </Flex>
+
+          {/* Clean CTA section */}
+          <VStack spacing={6} pt={4}>
+            <HStack 
+              spacing={4} 
+              direction={{ base: "column", sm: "row" }}
+              w="full" 
+              align="center" 
+              justify="center"
+              maxW={{ base: "300px", sm: "auto" }}
             >
-              Fahrzeuge ansehen
-            </Button>
-          </HStack>
+              <Button
+                size={{ base: "lg", md: "lg" }}
+                bg="#1E3689"
+                color="white"
+                _hover={{ 
+                  bg: "white",
+                  color: "#1E3689",
+                  boxShadow: '0 8px 25px rgba(30,58,138,0.3)',
+                  borderColor: "#1E3689",
+                }}
+                transition="all 0.3s"
+                as="a"
+                href="/kontakt"
+                borderRadius="lg"
+                px={{ base: 8, md: 12 }}
+                fontWeight="600"
+                shadow="md"
+                border="1px solid"
+                borderColor="#1E3689"
+                minW={{ base: "full", sm: "180px" }}
+              >
+                Kontakt
+              </Button>
+              
+              <Button
+                size={{ base: "lg", md: "lg" }}
+                variant="outline"
+                borderColor="blue.600"
+                color="blue.600"
+                _hover={{ 
+                  bg: "#1E3689",
+                  color: "white",
+                  boxShadow: '0 8px 25px rgba(30,58,138,0.3)' 
+                }}
+                transition="all 0.3s"
+                as="a"
+                href="https://home.mobile.de/LEMOINE-NUTZFAHRZEUGE#ses"
+                target="_blank"
+                borderRadius="lg"
+                px={{ base: 8, md: 12 }}
+                fontWeight="600"
+                minW={{ base: "full", sm: "180px" }}
+              >
+                Fahrzeuge
+              </Button>
+            </HStack>
+          </VStack>
         </VStack>
       </Container>
     </Box>
