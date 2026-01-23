@@ -46,9 +46,9 @@ export function Footer() {
             </Text>
             <VStack align="start" spacing={2} color="gray.300">
               <Text>Musterstraße 123, 33602 Bielefeld</Text>
-              <Text>0521 / 123 456 78</Text>
+              <Text>0521 3906222</Text>
               <Text>info@lemoine-nutzfahrzeuge.de</Text>
-              <Text>Mo-Fr: 8:00-18:00, Sa: 9:00-14:00</Text>
+              <Text>Mo-Fr: 8:30-18:00, Sa: 9:00-13:00</Text>
             </VStack>
           </VStack>
 

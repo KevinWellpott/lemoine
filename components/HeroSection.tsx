@@ -87,69 +87,7 @@ export function HeroSection() {
           </VStack>
 
           {/* Unique stats layout */}
-          <Flex
-            direction={{ base: "column", md: "row" }}
-            gap={{ base: 6, md: 8 }}
-            align="center"
-            justify="center"
-            w="full"
-            maxW="600px"
-          >
-            <VStack 
-              spacing={2}
-              flex="1"
-              p={6}
-              borderLeft={{ base: "none", md: "3px solid" }}
-              borderTop={{ base: "3px solid", md: "none" }}
-              borderColor="blue.500"
-              align={{ base: "center", md: "start" }}
-            >
-              <Text fontSize={{ base: "3xl", md: "4xl" }} fontWeight="800" color="blue.600" lineHeight="1">
-                27
-              </Text>
-              <Text fontSize="md" color="gray.600" fontWeight="600" textAlign={{ base: "center", md: "left" }}>
-                Jahre Erfahrung
-                <br />
-                <Text as="span" fontSize="sm" opacity={0.7}>
-                  im Nutzfahrzeughandel
-                </Text>
-              </Text>
-            </VStack>
-
-            <VStack spacing={2} flex="1" align="center" p={6}>
-              <Text fontSize={{ base: "3xl", md: "4xl" }} fontWeight="800" color="gray.900" lineHeight="1">
-                150+
-              </Text>
-              <Text fontSize="md" color="gray.600" fontWeight="600" textAlign="center">
-                Geprüfte Fahrzeuge
-                <br />
-                <Text as="span" fontSize="sm" opacity={0.7}>
-                  sofort verfügbar
-                </Text>
-              </Text>
-            </VStack>
-
-            <VStack 
-              spacing={2}
-              flex="1"
-              p={6}
-              borderRight={{ base: "none", md: "3px solid" }}
-              borderBottom={{ base: "3px solid", md: "none" }}
-              borderColor="green.500"
-              align={{ base: "center", md: "end" }}
-            >
-              <Text fontSize={{ base: "3xl", md: "4xl" }} fontWeight="800" color="green.600" lineHeight="1">
-                4.8
-              </Text>
-              <Text fontSize="md" color="gray.600" fontWeight="600" textAlign={{ base: "center", md: "right" }}>
-                Google Bewertung
-                <br />
-                <Text as="span" fontSize="sm" opacity={0.7}>
-                  von unseren Kunden
-                </Text>
-              </Text>
-            </VStack>
-          </Flex>
+          
 
           {/* Clean CTA section */}
           <VStack spacing={6} pt={4}>

@@ -12,6 +12,8 @@ import {
   Image,
 } from '@chakra-ui/react'
 
+import Link from 'next/link'
+
 export function ProzessSection() {
   const [activeMode, setActiveMode] = useState<'kaufen' | 'verkaufen'>('kaufen')
 
@@ -77,7 +79,7 @@ export function ProzessSection() {
             <Button
               onClick={() => setActiveMode('kaufen')}
               bg={activeMode === 'kaufen' ? 'white' : 'transparent'}
-              color={activeMode === 'kaufen' ? 'blue.600' : 'gray.600'}
+              color={activeMode === 'kaufen' ? '#1E3689' : 'gray.600'}
               _hover={{ 
                 bg: activeMode === 'kaufen' ? 'gray.50' : 'rgba(0,0,0,0.05)'
               }}
@@ -91,10 +93,10 @@ export function ProzessSection() {
             </Button>
             <Button
               onClick={() => setActiveMode('verkaufen')}
-              bg={activeMode === 'verkaufen' ? 'blue.600' : 'transparent'}
+              bg={activeMode === 'verkaufen' ? '#1E3689' : 'transparent'}
               color={activeMode === 'verkaufen' ? 'white' : (activeMode === 'kaufen' ? 'rgba(255,255,255,0.8)' : 'gray.600')}
               _hover={{ 
-                bg: activeMode === 'verkaufen' ? 'blue.700' : 'rgba(0,0,0,0.05)'
+                bg: activeMode === 'verkaufen' ? '#1E3689' : 'rgba(0,0,0,0.05)'
               }}
               borderRadius="full"
               px={6}
@@ -137,7 +139,7 @@ export function ProzessSection() {
                 w="80px"
                 h="80px"
                 bg={activeMode === 'kaufen' ? 'white' : '#1E3689'}
-                color={activeMode === 'kaufen' ? 'blue.600' : 'white'}
+                color={activeMode === 'kaufen' ? '#1E3689' : 'white'}
                 borderRadius="full"
                 display="flex"
                 alignItems="center"
@@ -199,22 +201,25 @@ export function ProzessSection() {
 
         {/* Final CTA */}
         <Box textAlign="center" mt={{ base: 16, md: 20 }}>
-          <Button
-            size="lg"
-            h="56px"
-            bg={activeMode === 'kaufen' ? 'white' : 'blue.600'}
-            color={activeMode === 'kaufen' ? 'blue.600' : 'white'}
-            _hover={{ 
-              bg: activeMode === 'kaufen' ? 'gray.50' : 'blue.700'
-            }}
-            borderRadius="xl"
-            px={8}
-            fontSize="lg"
-            fontWeight="600"
-          >
-            {activeMode === 'kaufen' ? 'Jetzt LKW finden' : 'Jetzt Fahrzeug verkaufen'}
-          </Button>
-        </Box>
+  <Link href="/kontakt">
+    <Button
+      size="lg"
+      h="56px"
+      bg={activeMode === 'kaufen' ? 'white' : '#1E3689'}
+      color={activeMode === 'kaufen' ? '#1E3689' : 'white'}
+      _hover={{ 
+        bg: activeMode === 'kaufen' ? 'gray.50' : '#1E3689'
+      }}
+      borderRadius="xl"
+      px={8}
+      fontSize="lg"
+      fontWeight="600"
+    >
+      {activeMode === 'kaufen' ? 'Jetzt LKW finden' : 'Jetzt Fahrzeug verkaufen'}
+    </Button>
+  </Link>
+</Box>
+
       </Container>
     </Box>
   )

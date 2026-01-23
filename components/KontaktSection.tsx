@@ -176,10 +176,10 @@ export function KontaktSection() {
               >
                 <Button
                   onClick={() => setFormMode('kaufen')}
-                  bg={formMode === 'kaufen' ? 'blue.600' : 'transparent'}
+                  bg={formMode === 'kaufen' ? '#1E3689' : 'transparent'}
                   color={formMode === 'kaufen' ? 'white' : 'gray.600'}
                   _hover={{ 
-                    bg: formMode === 'kaufen' ? 'blue.700' : 'gray.100'
+                    bg: formMode === 'kaufen' ? '#1E3689' : 'gray.100'
                   }}
                   borderRadius="full"
                   px={6}
@@ -187,14 +187,14 @@ export function KontaktSection() {
                   fontWeight="600"
                   fontSize="md"
                 >
-                  🚛 LKW kaufen
+                  LKW kaufen
                 </Button>
                 <Button
                   onClick={() => setFormMode('verkaufen')}
-                  bg={formMode === 'verkaufen' ? 'blue.600' : 'transparent'}
+                  bg={formMode === 'verkaufen' ? '#1E3689' : 'transparent'}
                   color={formMode === 'verkaufen' ? 'white' : 'gray.600'}
                   _hover={{ 
-                    bg: formMode === 'verkaufen' ? 'blue.700' : 'gray.100'
+                    bg: formMode === 'verkaufen' ? '#1E3689' : 'gray.100'
                   }}
                   borderRadius="full"
                   px={6}
@@ -202,7 +202,7 @@ export function KontaktSection() {
                   fontWeight="600"
                   fontSize="md"
                 >
-                  💰 LKW verkaufen
+                  LKW verkaufen
                 </Button>
               </HStack>
             </Flex>
@@ -215,6 +215,20 @@ export function KontaktSection() {
               border="1px solid"
               borderColor="gray.200"
             >
+              <Heading 
+                as="h4" 
+                fontSize={{ base: "xl", md: "2xl" }}
+                fontWeight="700"
+                color="gray.900"
+                mb={6}
+                textAlign="center"
+              >
+                {formMode === 'kaufen' 
+                  ? 'Ihr Wunschfahrzeug finden' 
+                  : 'Fahrzeug kostenlos bewerten lassen'
+                }
+              </Heading>
+
               <form onSubmit={handleSubmit}>
                 <VStack spacing={6}>
                   {/* Fahrzeugtyp */}
@@ -472,7 +486,7 @@ export function KontaktSection() {
           </Box>
 
           {/* Contact Info & Map */}
-          <VStack spacing={8} align="stretch">
+          <VStack spacing={8} align="stretch" >
             <Box
               bg="white"
               borderRadius="2xl"
@@ -503,8 +517,8 @@ export function KontaktSection() {
                 w="full"
               >
                 <VStack spacing={4} align="start">
-                  <Heading as="h4" size="lg" color="gray.800">
-                    📍 Unser Standort
+                  <Heading as="h5" size="lg" color="gray.800">
+                    Unser Standort
                   </Heading>
                   <VStack align="start" spacing={1}>
                     <Text fontSize="md" color="gray.700">
@@ -526,22 +540,22 @@ export function KontaktSection() {
                 w="full"
               >
                 <VStack spacing={4} align="start">
-                  <Heading as="h4" size="lg" color="gray.800">
-                    📞 Direkter Kontakt
+                  <Heading as="h5" size="lg" color="gray.800">
+                    Direkter Kontakt
                   </Heading>
                   <VStack align="start" spacing={2}>
                     <Text fontSize="md" color="gray.700">
-                      <Text as="span" fontWeight="600">Telefon:</Text> 0521 / 123 456 78
+                      <Text as="span" fontWeight="600">Telefon:</Text> 0521 3906222
                     </Text>
                     <Text fontSize="md" color="gray.700">
                       <Text as="span" fontWeight="600">E-Mail:</Text> info@lemoine-nutzfahrzeuge.de
                     </Text>
-                    <Text fontSize="md" color="gray.700" fontWeight="600">
+                    <Heading as="h6" fontSize="md" color="gray.700" fontWeight="600">
                       Öffnungszeiten:
-                    </Text>
+                    </Heading>
                     <Text fontSize="sm" color="gray.600">
-                      Mo-Fr: 8:00-18:00 Uhr<br />
-                      Sa: 9:00-14:00 Uhr
+                      Mo-Fr: 8:30-18:00 Uhr<br />
+                      Sa: 9:00-13:00 Uhr
                     </Text>
                   </VStack>
                 </VStack>
