@@ -77,12 +77,9 @@ export function HeroSection() {
               maxW="650px"
               mt={4}
             >
-              150+ geprüfte Fahrzeuge von Mercedes, MAN und Volvo.
+              Volle Transparenz bei über 100 geprüften Gebraucht-LKW. Bei uns in Bielefeld erhalten Sie neben fairen Finanzierungen auch den kompletten Service: von der Inspektion bis zur Reparatur in unserer eigenen Werkstatt.
               <br />
-              <Text as="span" fontWeight="600" color="gray.700">
-                Finanzierung ab 0% möglich
-              </Text>
-              {' '}– direkt aus Bielefeld.
+           
             </Text>
           </VStack>
 

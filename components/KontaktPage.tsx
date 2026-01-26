@@ -201,7 +201,7 @@ export function KontaktPage() {
                     border="none"
                     shadow={formMode === 'kaufen' ? 'lg' : 'none'}
                   >
-                    🚛 LKW kaufen
+                    LKW kaufen
                   </Button>
                   <Button
                     onClick={() => setFormMode('verkaufen')}
@@ -220,7 +220,7 @@ export function KontaktPage() {
                     border="none"
                     shadow={formMode === 'verkaufen' ? 'lg' : 'none'}
                   >
-                    💰 LKW verkaufen
+                    LKW verkaufen
                   </Button>
                 </HStack>
               </Flex>
@@ -419,7 +419,7 @@ export function KontaktPage() {
                             display="flex"
                             alignItems="center"
                           >
-                            <Text fontWeight="600">🇩🇪 +49</Text>
+                            <Text fontWeight="600">+49</Text>
                           </Box>
                           <Input 
                             placeholder="1234 567890"
@@ -511,8 +511,8 @@ export function KontaktPage() {
                       loadingText="Wird gesendet..."
                     >
                       {formMode === 'kaufen' 
-                        ? '🚛 Anfrage senden - Fahrzeug finden' 
-                        : '💰 Fahrzeug bewerten lassen'
+                        ? 'Anfrage senden - Fahrzeug finden' 
+                        : 'Fahrzeug bewerten lassen'
                       }
                     </Button>
 
@@ -565,7 +565,7 @@ export function KontaktPage() {
                 >
                   <VStack spacing={4} align="start">
                     <Heading as="h3" size="lg" color="gray.800">
-                      📍 Unser Standort
+                      Unser Standort
                     </Heading>
                     <VStack align="start" spacing={2}>
                       <Text fontSize="md" fontWeight="600" color="gray.700">
@@ -589,11 +589,11 @@ export function KontaktPage() {
                 >
                   <VStack spacing={4} align="start">
                     <Heading as="h3" size="lg" color="gray.800">
-                      📞 Direkter Kontakt
+                      Direkter Kontakt
                     </Heading>
                     <VStack align="start" spacing={2}>
                       <Text fontSize="md" color="gray.700">
-                        <strong>Telefon:</strong> 0521 / 123 456 78
+                        <strong>Telefon:</strong> 0521 3906222
                       </Text>
                       <Text fontSize="md" color="gray.700">
                         <strong>E-Mail:</strong> info@lemoine-nutzfahrzeuge.de
@@ -602,8 +602,8 @@ export function KontaktPage() {
                         <strong>Öffnungszeiten:</strong>
                       </Text>
                       <Text fontSize="sm" color="gray.600">
-                        Mo-Fr: 8:00-18:00 Uhr<br />
-                        Sa: 9:00-14:00 Uhr
+                      Mo-Fr: 8:30-18:00 Uhr<br />
+                      Sa: 9:00-13:00 Uhr
                       </Text>
                     </VStack>
                   </VStack>

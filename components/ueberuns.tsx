@@ -83,20 +83,12 @@ export function UeberUnsSection() {
             
             <VStack align="start" spacing={4} color="gray.600" fontSize={{ base: "md", md: "lg" }} lineHeight="1.6">
               <Text>
-                Wilhelm "Willi" Lemoine gründete unser Unternehmen 1998 in Bielefeld mit einer 
-                klaren Vision: ehrlichen Nutzfahrzeughandel mit persönlicher Beratung zu verbinden.
+              Seit der Gründung 1998 in Bielefeld verbinden wir das Beste aus zwei Welten: die Ehrlichkeit und Expertise des traditionellen Nutzfahrzeughandels mit der digitalen Weitsicht eines modernen Unternehmens.
+
+Als einer der ersten Händler online konnten wir seit 2001 über 550.000 Besucher auf unseren Plattformen beraten. Heute ist unsere 2.000 m² große Zentrale in Bielefeld-Sennestadt die Basis für Ihre Vorteile: regionale Nähe, Spezialisierung auf kommunale Fahrzeuge und Saugwagen sowie ein umfassendes Angebot für alle Nutzfahrzeug-Bedürfnisse. Bei uns kaufen Sie nicht nur ein Fahrzeug – Sie erhalten eine Lösung aus einer Hand.
               </Text>
               
-              <Text>
-                Als einer der ersten Händler gingen wir bereits 2001 online und haben seitdem 
-                über 550.000 Besucher auf unseren Plattformen begrüßt. Diese frühe Digitalisierung 
-                hat uns zu einem der etabliertesten Anbieter in der Region gemacht.
-              </Text>
-              
-              <Text>
-                Heute sind wir stolz auf unsere Spezialisierung in kommunalen Fahrzeugen 
-                und Saugwagen, ohne dabei den Blick für alle Arten von Nutzfahrzeugen zu verlieren.
-              </Text>
+       
             </VStack>
           </VStack>
 

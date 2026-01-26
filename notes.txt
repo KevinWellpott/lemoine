@@ -9,12 +9,10 @@ in die route.ts Luis Mail reinschreiben wenn es so weit ist
 
 To-Do
 
-- Vibecode Feeling rausnehmen
 - Contact SEITE und das Formular unten anpassen, leicht schicker machen
-- GOogle Rezensionen einpflegen
 - Bilder einpflegen in die ABlauf section
-- rechtliches
 
 To-Do NACH Luis Zusage
 - Analytics verknüpfen 
 - Search Console verknüpfen
+- rechtstexte
